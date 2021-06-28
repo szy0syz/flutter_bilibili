@@ -1,8 +1,7 @@
 import 'dart:convert';
+import '../request/base_request.dart';
 
-import 'package:flutter_bili_app/http/request/base_request.dart';
-
-///网络请求抽象类
+/// 网络请求抽象类
 abstract class HiNetAdapter {
   Future<HiNetResponse<T>> send<T>(BaseRequest request);
 }

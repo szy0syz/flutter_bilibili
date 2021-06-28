@@ -22,8 +22,11 @@ class HiNet {
   }
 
   Future fire(BaseRequest request) async {
+    /// 要么有正确的返回
     HiNetResponse response;
+    /// 要么给错误的信息
     var error;
+
     try {
       response = await send(request);
     } on HiNetError catch (e) {
