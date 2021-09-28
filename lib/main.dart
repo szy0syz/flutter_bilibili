@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/http/request/test_request.dart';
 
@@ -53,6 +54,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    HiCache.preInit();
+  }
+
   void _incrementCounter() async {
     // TestRequest request = TestRequest();
     // request.add("aa", "ddd").add("bb", "333").add("requestPrams", "kkkk");
@@ -60,7 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // print(res);
 
     // test();
-    test1();
+    // test1();
+    test2();
 
     setState(() {
       _counter++;
@@ -91,6 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
     print('face:${owner.face}');
     print('fans:${owner.fans}');
     // Result.fromJson(json)
+  }
+
+  void test2() {
+    // await HiCache.getInstance().setString('name', 'jerry');
+    var name = HiCache.getInstance().get('name');
+
+    print(name);
   }
 
   @override
