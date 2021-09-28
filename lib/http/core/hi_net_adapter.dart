@@ -9,6 +9,7 @@ abstract class HiNetAdapter {
 
 /// 统一网络层返回格式
 class HiNetResponse<T> {
+  // 构造方法: 非必填
   HiNetResponse({
     this.data,
     required this.request,

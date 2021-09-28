@@ -42,3 +42,7 @@ abstract class HiNetAdapter {
 - 我们需要所有的 `DioAdapter` `MockAdapter` `GetxAdapter` 都要规矩办事
 - 主要是可以放回统一的响应体格式，这样上层操作员，根本不用管底层实现
 - 而且这个 `Adapter` 只管发送数据
+
+### JSON
+
+- `flutter packages pub run build_runner build`

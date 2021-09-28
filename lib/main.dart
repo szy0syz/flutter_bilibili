@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/http/request/test_request.dart';
+
+import 'model/onwer.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,15 +54,43 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() async {
-    TestRequest request = TestRequest();
-    request.add("aa", "ddd").add("bb", "333").add("requestPrams", "kkkk");
-    var res = await HiNet.getInstance().fire(request);
+    // TestRequest request = TestRequest();
+    // request.add("aa", "ddd").add("bb", "333").add("requestPrams", "kkkk");
+    // var res = await HiNet.getInstance().fire(request);
+    // print(res);
 
-    print(res);
+    // test();
+    test1();
 
     setState(() {
       _counter++;
     });
+  }
+
+  void test() {
+    const jsonString =
+        "{ \"name\": \"flutter\", \"url\": \"https://coding.imooc.com/class/487.html\" }";
+    //json 转map
+    Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+    print('test  -  name:${jsonMap['name']}');
+    print('test  -  url:${jsonMap['url']}');
+    //map 转json
+    String json = jsonEncode(jsonMap);
+    print('test  -  json:$json');
+  }
+
+  void test1() {
+    var ownerMap = {
+      "name": "伊零Onezero11",
+      "face":
+          "http://i2.hdslb.com/bfs/face/1c57a17a7b077ccd19dba58a981a673799b85aef.jpg",
+      "fans": 12
+    };
+    Owner owner = Owner.fromJson(ownerMap);
+    print('name:${owner.name}');
+    print('face:${owner.face}');
+    print('fans:${owner.fans}');
+    // Result.fromJson(json)
   }
 
   @override

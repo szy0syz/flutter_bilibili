@@ -7,6 +7,7 @@ import 'package:flutter_bilibili/http/request/base_request.dart';
 class DioAdapter extends HiNetAdapter {
   @override
   Future<HiNetResponse<T>> send<T>(BaseRequest request) async {
+    // 搞两个变量，一个没初始化赋值，一个初始化赋值
     var response, options = Options(headers: request.header);
     var error;
     try {
