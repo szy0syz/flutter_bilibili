@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
+import 'package:flutter_bilibili/http/request/notice_request.dart';
 import 'package:flutter_bilibili/http/request/test_request.dart';
 
 import 'http/core/hi_error.dart';
@@ -71,14 +72,22 @@ class _MyHomePageState extends State<MyHomePage> {
     // test();
     // test1();
     // test2();
-    testLogin();
+    // testLogin();
+    testNotice();
 
     setState(() {
       _counter++;
     });
   }
 
-  void testReg() {}
+  void testNotice() async {
+    try {
+      var notice = await HiNet.getInstance().fire(NoticeRequest());
+      print(notice);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void testLogin() async {
     try {
