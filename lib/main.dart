@@ -4,7 +4,8 @@ import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/http/request/notice_request.dart';
-import 'package:flutter_bilibili/http/request/test_request.dart';
+import 'package:flutter_bilibili/page/registration_page.dart';
+import 'package:flutter_bilibili/util/color.dart';
 
 import 'http/core/hi_error.dart';
 import 'model/onwer.dart';
@@ -29,9 +30,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: white,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: RegistrationPage(),
     );
   }
 }
