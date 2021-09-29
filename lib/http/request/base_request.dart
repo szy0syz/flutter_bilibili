@@ -48,7 +48,11 @@ abstract class BaseRequest {
     return this;
   }
 
-  Map<String, dynamic> header = {};
+  Map<String, dynamic> header = {
+    'course-flag': 'fa',
+    //访问令牌，在课程公告获取
+    "auth-token": "ZmEtMjAyMS0wNC0xMiAyMToyMjoyMC1mYQ==fa",
+  };
 
   ///添加header
   BaseRequest addHeader(String k, Object v) {

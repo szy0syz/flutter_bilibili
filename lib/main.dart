@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/http/core/hi_net.dart';
+import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/http/request/test_request.dart';
 
+import 'http/core/hi_error.dart';
 import 'model/onwer.dart';
 
 void main() {
@@ -68,11 +70,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // test();
     // test1();
-    test2();
+    // test2();
+    testLogin();
 
     setState(() {
       _counter++;
     });
+  }
+
+  void testReg() {}
+
+  void testLogin() async {
+    try {
+      // var result =
+      // await LoginDao.registration('szy0syz', '123123', '000', '0000');
+      var result2 = await LoginDao.login('szy0syz', '123123');
+      print(result2);
+      // print(result);
+    } on NeedAuth catch (e) {
+      print(e);
+    } on HiNetError catch (e) {
+      print(e);
+    }
   }
 
   void test() {
