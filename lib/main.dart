@@ -32,7 +32,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: white,
       ),
-      home: RegistrationPage(),
+      home: RegistrationPage(
+        onJumpToLogin: () {},
+      ),
     );
   }
 }
