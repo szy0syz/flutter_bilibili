@@ -46,7 +46,12 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   Widget build(BuildContext context) {
     // 构建路由栈
     pages = [
-      pageWrap(HomePage()),
+      pageWrap(HomePage(
+        onJumpToDetail: (videoModel) {
+          this.videoModel = videoModel;
+          notifyListeners();
+        },
+      )),
       if (videoModel != null) pageWrap(VideoDetailPage(videoModel!))
     ];
 
