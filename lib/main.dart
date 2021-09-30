@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bilibili/db/hi_cache.dart';
+import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
+import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/page/home_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
+import 'package:flutter_bilibili/util/color.dart';
 
 void main() {
   runApp(BiliApp());
@@ -19,14 +23,23 @@ class _BiliAppState extends State<BiliApp> {
 
   @override
   Widget build(BuildContext context) {
-    // 定义 route
-    var widget = Router(
-      routerDelegate: _routeDelegate,
-    );
+    return FutureBuilder<HiCache>(
+        // 进行全局的初始化
+        future: HiCache.preInit(),
+        builder: (BuildContext context, AsyncSnapshot<HiCache> snapshot) {
+          var widget = snapshot.connectionState == ConnectionState.done
+              ? Router(routerDelegate: _routeDelegate)
+              : Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
 
-    return MaterialApp(
-      home: widget,
-    );
+          return MaterialApp(
+            home: widget,
+            theme: ThemeData(primarySwatch: white),
+          );
+        });
   }
 }
 
@@ -34,9 +47,10 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRoutePath> {
   final GlobalKey<NavigatorState> navigatorKey;
 
+  RouteStatus _routeStatus = RouteStatus.home;
+
   List<MaterialPage> pages = [];
   VideoModel? videoModel;
-  BiliRoutePath? path;
 
   // 为 Navigator 设置一个 key，必要的时候可以通过 navigatorKey.currentState
   // 来获取当前 NavigatorState
@@ -44,7 +58,16 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
 
   @override
   Widget build(BuildContext context) {
-    // 构建路由栈
+    var index = getPageIndex(pages, routeStatus);
+
+    List<MaterialPage> tempPages = pages;
+    if (index != -1) {
+      // 要打开的页面在栈中已存在，则将该页面和它上面的所有页面进行出栈
+      // tips 具体规则可以根据需要进行调整，这里要求栈中只允许有一个同样的页面实例
+      tempPages = tempPages.sublist(0, index);
+    }
+
+    // 管理路由堆栈
     pages = [
       pageWrap(HomePage(
         onJumpToDetail: (videoModel) {
@@ -68,10 +91,20 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     );
   }
 
-  @override
-  Future<void> setNewRoutePath(BiliRoutePath path) async {
-    this.path = path;
+  bool get hasLogin => LoginDao.getBoardingPass() != null;
+
+  RouteStatus get routeStatus {
+    if (_routeStatus != RouteStatus.registration && !hasLogin) {
+      return _routeStatus = RouteStatus.login;
+    } else if (videoModel != null) {
+      return _routeStatus = RouteStatus.detail;
+    } else {
+      return _routeStatus;
+    }
   }
+
+  @override
+  Future<void> setNewRoutePath(BiliRoutePath path) async {}
 }
 
 class BiliRoutePath {

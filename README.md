@@ -81,3 +81,11 @@ class _BiliAppState extends State<BiliApp> {
   }
 }
 ```
+
+> 上面这个代码，如果在有业务需求先本地搞点事情读点缓存，再确定怎么渲染时是无法做的到。
+>
+> 所以我们必须改造：
+
+```dart
+
+```
