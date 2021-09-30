@@ -50,3 +50,34 @@ abstract class HiNetAdapter {
 ## Navigator 2.0
 
 ![001](/images/docs/RouterDelegate.png)
+
+> 十分精华，终于找到迁移的感觉了！
+
+```dart
+void main() {
+  runApp(BiliApp());
+}
+
+class BiliApp extends StatefulWidget {
+  BiliApp({Key? key}) : super(key: key);
+
+  @override
+  _BiliAppState createState() => _BiliAppState();
+}
+
+class _BiliAppState extends State<BiliApp> {
+  BiliRouteDelegate _routeDelegate = BiliRouteDelegate();
+
+  @override
+  Widget build(BuildContext context) {
+    // 定义 route
+    var widget = Router(
+      routerDelegate: _routeDelegate,
+    );
+
+    return MaterialApp(
+      home: widget,
+    );
+  }
+}
+```
