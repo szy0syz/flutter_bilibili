@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/util/string_util.dart';
+import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/login_button.dart';
 import 'package:flutter_bilibili/widget/login_effect.dart';
@@ -126,20 +127,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
       print(result);
       if (result['code'] == 0) {
         print('注册成功');
-        // showToast('注册成功');
+        showToast('注册成功');
         if (widget.onJumpToLogin != null) {
           widget.onJumpToLogin!();
         }
       } else {
         print(result['msg']);
-        // showWarnToast(result['msg']);
+        showWarnToast(result['msg']);
       }
     } on NeedAuth catch (e) {
       print(e);
-      // showWarnToast(e.message);
+      showWarnToast(e.message);
     } on HiNetError catch (e) {
       print(e);
-      // showWarnToast(e.message);
+      showWarnToast(e.message);
     }
   }
 
@@ -152,6 +153,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
     if (tips != null) {
       print(tips);
+      showWarnToast(tips);
       return;
     }
     send();
