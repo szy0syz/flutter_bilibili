@@ -4,8 +4,10 @@ import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/http/request/notice_request.dart';
-import 'package:flutter_bilibili/page/login_page.dart';
+import 'package:flutter_bilibili/model/video_model.dart';
+import 'package:flutter_bilibili/page/home_page.dart';
 import 'package:flutter_bilibili/page/registration_page.dart';
+import 'package:flutter_bilibili/page/video_detail_page.dart';
 import 'package:flutter_bilibili/util/color.dart';
 
 import 'http/core/hi_error.dart';
@@ -193,4 +195,56 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRoutePath> {
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  List<MaterialPage> pages = [];
+  VideoModel? videoModel;
+  BiliRoutePath? path;
+
+  // 为 Navigator 设置一个 key，必要的时候可以通过 navigatorKey.currentState
+  // 来获取当前 NavigatorState
+  BiliRouteDelegate(this.navigatorKey, {this.videoModel, this.path});
+
+  @override
+  Widget build(BuildContext context) {
+    // 构建路由栈
+    pages = [
+      pageWrap(HomePage()),
+      if (videoModel != null) pageWrap(VideoDetailPage(videoModel!))
+    ];
+
+    return Navigator(
+      key: navigatorKey,
+      pages: pages,
+      onPopPage: (route, result) {
+        // 在这里可以控制是否可以返回
+        if (!route.didPop(result)) {
+          return false;
+        }
+        return true;
+      },
+    );
+  }
+
+  @override
+  Future<void> setNewRoutePath(BiliRoutePath path) async {
+    this.path = path;
+  }
+}
+
+class BiliRoutePath {
+  final String location;
+
+  BiliRoutePath.home() : location = '/';
+
+  BiliRoutePath.detail() : location = '/detail';
+}
+
+/// 创建页面
+pageWrap(Widget child) {
+  return MaterialPage(child: child, key: ValueKey(child.hashCode));
 }

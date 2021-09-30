@@ -46,3 +46,7 @@ abstract class HiNetAdapter {
 ### JSON
 
 - `flutter packages pub run build_runner build`
+
+## Navigator 2.0
+
+![001](/images/docs/RouterDelegate.png)
