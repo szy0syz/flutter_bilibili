@@ -51,9 +51,6 @@ class TestMo {
     data['desc'] = this.desc;
     data['view'] = this.view;
     data['duration'] = this.duration;
-    if (this.owner != null) {
-      data['owner'] = this.owner.toJson();
-    }
     data['reply'] = this.reply;
     data['favorite'] = this.favorite;
     data['like'] = this.like;
