@@ -90,8 +90,14 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
       ));
     } else if (routeStatus == RouteStatus.login) {
       page = pageWrap(LoginPage(
-        onJumpRegisttion: () {},
-        onSuccess: () {},
+        onJumpRegisttion: () {
+          _routeStatus = RouteStatus.registration;
+          notifyListeners();
+        },
+        onSuccess: () {
+          _routeStatus = RouteStatus.home;
+          notifyListeners();
+        },
       ));
     }
 
