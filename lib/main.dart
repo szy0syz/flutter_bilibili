@@ -4,6 +4,8 @@ import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/page/home_page.dart';
+import 'package:flutter_bilibili/page/login_page.dart';
+import 'package:flutter_bilibili/page/registration_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
 import 'package:flutter_bilibili/util/color.dart';
 
@@ -67,16 +69,35 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
       tempPages = tempPages.sublist(0, index);
     }
 
-    // 管理路由堆栈
-    pages = [
-      pageWrap(HomePage(
+    var page;
+    if (routeStatus == RouteStatus.home) {
+      // 跳转到首页时，需将栈中其他页面进行出栈，因为首页是不可回退的
+      pages.clear();
+      page = pageWrap(HomePage(
         onJumpToDetail: (videoModel) {
           this.videoModel = videoModel;
           notifyListeners();
         },
-      )),
-      if (videoModel != null) pageWrap(VideoDetailPage(videoModel!))
-    ];
+      ));
+    } else if (routeStatus == RouteStatus.detail) {
+      page = pageWrap(VideoDetailPage(videoModel!));
+    } else if (routeStatus == RouteStatus.registration) {
+      page = pageWrap(RegistrationPage(
+        onJumpToLogin: () {
+          _routeStatus = RouteStatus.login;
+          notifyListeners();
+        },
+      ));
+    } else if (routeStatus == RouteStatus.login) {
+      page = pageWrap(LoginPage(
+        onJumpRegisttion: () {},
+        onSuccess: () {},
+      ));
+    }
+
+    // 重新创建一个数组，否则 pages 因引用没有改变理由不会生效
+    tempPages = [...tempPages, page];
+    pages = tempPages;
 
     return Navigator(
       key: navigatorKey,
