@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 void showWarnToast(String text) {
   Fluttertoast.showToast(
       msg: text,
-      toastLength: Toast.LENGTH_LONG,
+      toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.TOP,
       backgroundColor: Colors.red,
       textColor: Colors.white);
@@ -15,7 +15,7 @@ void showWarnToast(String text) {
 void showToast(String text) {
   Fluttertoast.showToast(
     msg: text,
-    toastLength: Toast.LENGTH_LONG,
+    toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.TOP,
   );
 }

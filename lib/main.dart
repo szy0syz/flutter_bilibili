@@ -8,6 +8,7 @@ import 'package:flutter_bilibili/page/login_page.dart';
 import 'package:flutter_bilibili/page/registration_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
 import 'package:flutter_bilibili/util/color.dart';
+import 'package:flutter_bilibili/util/toast.dart';
 
 void main() {
   runApp(BiliApp());
@@ -105,17 +106,41 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     tempPages = [...tempPages, page];
     pages = tempPages;
 
-    return Navigator(
-      key: navigatorKey,
-      pages: pages,
-      onPopPage: (route, result) {
-        // 在这里可以控制是否可以返回
-        if (!route.didPop(result)) {
-          return false;
-        }
-        return true;
-      },
-    );
+    // fix: 修复Android物理按返回键，无法返回上一页的问题
+    return WillPopScope(
+        child: Navigator(
+          key: navigatorKey,
+          pages: pages,
+          onPopPage: (route, result) {
+   
+            // 如果没有登录，而又在登录页，此时就提示登录，不给返回
+            // 因为该APP必须登录后才能用
+            if (route.settings is MaterialPage) {
+              if ((route.settings as MaterialPage).child is LoginPage) {
+                if (!hasLogin) {
+                  showWarnToast("请先登录");
+                  return false;
+                }
+              }
+            }
+
+            // 在这里可以控制是否可以返回
+            if (!route.didPop(result)) {
+              return false;
+            }
+
+            // 如果返回了上一页，必须将路由栈出栈
+            // 因为栈是先进后出，第一个进栈的肯定压在最底下
+            // 所以要出栈最后一个入栈的路由
+            pages.removeLast();
+
+            // 没啥条件限制了，可以返回了
+            return true;
+          },
+        ),
+        onWillPop: () async {
+          return !await navigatorKey.currentState!.maybePop();
+        });
   }
 
   bool get hasLogin => LoginDao.getBoardingPass() != null;
