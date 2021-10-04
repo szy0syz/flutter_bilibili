@@ -35,10 +35,51 @@ RouteStatus getStatus(MaterialPage page) {
   }
 }
 
-/// 路由信息
+/// 路由信息 
 class RouteStatusInfo {
   final RouteStatus routeStatus;
   final Widget page;
 
   RouteStatusInfo(this.routeStatus, this.page);
+}
+
+/// 监听路由页面跳转
+/// 感知当前页面是否压后台
+class HiNavigator extends _RouteJumpListener {
+  static HiNavigator? _instance;
+
+  RouteJumpListener? _routeJump;
+
+  HiNavigator._();
+
+  static HiNavigator getInstance() {
+    if (_instance == null) {
+      _instance = HiNavigator._();
+    }
+
+    return _instance!;
+  }
+
+  // 注册路由跳转逻辑
+  void registerRouteJump(RouteJumpListener routeJumpListener) {
+    this._routeJump = routeJumpListener;
+  }
+
+  @override
+  void onJumpTo(RouteStatus routeStatus, {Map? args}) {
+    _routeJump?.onJumpTo(routeStatus, args: args);
+  }
+}
+
+/// 抽象类提供Navigator实现
+abstract class _RouteJumpListener {
+  void onJumpTo(RouteStatus routeStatus, {Map args});
+}
+
+typedef OnJumpTo = void Function(RouteStatus routeStatus, {Map? args});
+
+class RouteJumpListener {
+  final OnJumpTo onJumpTo;
+
+  RouteJumpListener({required this.onJumpTo});
 }

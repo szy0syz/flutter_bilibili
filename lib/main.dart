@@ -57,7 +57,17 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
 
   // 为 Navigator 设置一个 key，必要的时候可以通过 navigatorKey.currentState
   // 来获取当前 NavigatorState
-  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
+    // 实现路由跳转逻辑
+    HiNavigator.getInstance().registerRouteJump(
+        RouteJumpListener(onJumpTo: (RouteStatus routeStatus, {Map? args}) {
+      _routeStatus = routeStatus;
+      if (routeStatus == RouteStatus.detail) {
+        this.videoModel = args?['videoMo'];
+      }
+      notifyListeners();
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +84,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     if (routeStatus == RouteStatus.home) {
       // 跳转到首页时，需将栈中其他页面进行出栈，因为首页是不可回退的
       pages.clear();
-      page = pageWrap(HomePage(
-        onJumpToDetail: (videoModel) {
-          this.videoModel = videoModel;
-          notifyListeners();
-        },
-      ));
+      page = pageWrap(HomePage());
     } else if (routeStatus == RouteStatus.detail) {
       page = pageWrap(VideoDetailPage(videoModel!));
     } else if (routeStatus == RouteStatus.registration) {
@@ -108,39 +113,38 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
 
     // fix: 修复Android物理按返回键，无法返回上一页的问题
     return WillPopScope(
-        child: Navigator(
-          key: navigatorKey,
-          pages: pages,
-          onPopPage: (route, result) {
-   
-            // 如果没有登录，而又在登录页，此时就提示登录，不给返回
-            // 因为该APP必须登录后才能用
-            if (route.settings is MaterialPage) {
-              if ((route.settings as MaterialPage).child is LoginPage) {
-                if (!hasLogin) {
-                  showWarnToast("请先登录");
-                  return false;
-                }
+      onWillPop: () async =>
+          !(await navigatorKey.currentState?.maybePop() ?? false),
+      child: Navigator(
+        key: navigatorKey,
+        pages: pages,
+        onPopPage: (route, result) {
+          // 如果没有登录，而又在登录页，此时就提示登录，不给返回
+          // 因为该APP必须登录后才能用
+          if (route.settings is MaterialPage) {
+            if ((route.settings as MaterialPage).child is LoginPage) {
+              if (!hasLogin) {
+                showWarnToast("请先登录");
+                return false;
               }
             }
+          }
 
-            // 在这里可以控制是否可以返回
-            if (!route.didPop(result)) {
-              return false;
-            }
+          // 在这里可以控制是否可以返回
+          if (!route.didPop(result)) {
+            return false;
+          }
 
-            // 如果返回了上一页，必须将路由栈出栈
-            // 因为栈是先进后出，第一个进栈的肯定压在最底下
-            // 所以要出栈最后一个入栈的路由
-            pages.removeLast();
+          // 如果返回了上一页，必须将路由栈出栈
+          // 因为栈是先进后出，第一个进栈的肯定压在最底下
+          // 所以要出栈最后一个入栈的路由
+          pages.removeLast();
 
-            // 没啥条件限制了，可以返回了
-            return true;
-          },
-        ),
-        onWillPop: () async {
-          return !await navigatorKey.currentState!.maybePop();
-        });
+          // 没啥条件限制了，可以返回了
+          return true;
+        },
+      ),
+    );
   }
 
   bool get hasLogin => LoginDao.getBoardingPass() != null;
