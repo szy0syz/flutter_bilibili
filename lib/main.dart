@@ -3,7 +3,6 @@ import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
-import 'package:flutter_bilibili/page/home_page.dart';
 import 'package:flutter_bilibili/page/login_page.dart';
 import 'package:flutter_bilibili/page/registration_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
