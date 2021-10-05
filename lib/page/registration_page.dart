@@ -9,6 +9,8 @@ import 'package:flutter_bilibili/widget/login_button.dart';
 import 'package:flutter_bilibili/widget/login_effect.dart';
 import 'package:flutter_bilibili/widget/login_input.dart';
 
+typedef RouteChangeListener(RouteStatusInfo current, RouteStatusInfo prev);
+
 class RegistrationPage extends StatefulWidget {
 
   const RegistrationPage({Key? key}) : super(key: key);
