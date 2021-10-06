@@ -90,6 +90,12 @@ class _BiliAppState extends State<BiliApp> {
 
 ```
 
+### HiState
+
+- 为什么要封装 `HiState`
+  - 处理页面状态异常
+  - `setState()` called after dispose() 问题分析
+
 ```bash
 "vim.easymotion": true,
   "vim.incsearch": true,

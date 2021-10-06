@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bilibili/core/hi_state.dart';
 import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/home_dao.dart';
 import 'package:flutter_bilibili/model/home_mo.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
+class _HomePageState extends HiState<HomePage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   var listener;
 
@@ -102,7 +103,6 @@ class _HomePageState extends State<HomePage>
   void loadData() async {
     try {
       HomeMo result = await HomeDao.get('推荐');
-      print('loadData: ${result}');
 
       if (result.categoryList != null) {
         //tab长度变化后需要重新创建TabController
