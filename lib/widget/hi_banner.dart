@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/home_mo.dart';
+import 'package:flutter_bilibili/model/video_model.dart';
+import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 class HiBanner extends StatelessWidget {
@@ -23,16 +25,17 @@ class HiBanner extends StatelessWidget {
     var right = 10 + (padding?.horizontal ?? 0) / 2;
 
     return Swiper(
-      itemCount: 1,
+      itemCount: bannerList.length,
       autoplay: true,
       itemBuilder: (BuildContext context, int index) {
         return _image(bannerList[index]);
       },
-      // 自定义指示器
+      //自定义指示器
       pagination: SwiperPagination(
-        alignment: Alignment.bottomRight,
-        margin: EdgeInsets.only(right: right)
-      ),
+          alignment: Alignment.bottomRight,
+          margin: EdgeInsets.only(right: right, bottom: 10),
+          builder: DotSwiperPaginationBuilder(
+              color: Colors.white60, size: 6, activeSize: 8)),
     );
   }
 
@@ -40,16 +43,28 @@ class HiBanner extends StatelessWidget {
     return InkWell(
       onTap: () {
         print(bannerMo.title);
+        _handleClick(bannerMo);
       },
       child: Container(
         padding: padding,
         child: ClipRRect(
           child: Image.network(
-            bannerMo.cover,
+            // bannerMo.cover,
+            "http://oss.yncce.cn/2021/02/01/20de3876d3f940a690d3b6ddbae87a46.jpeg",
             fit: BoxFit.cover,
           ),
         ),
       ),
     );
+  }
+
+  void _handleClick(BannerMo bannerMo) {
+    if (bannerMo.type == 'video') {
+      HiNavigator.getInstance().onJumpTo(RouteStatus.detail,
+          args: {'videoMo': VideoModel(vid: bannerMo.url)});
+    } else {
+      print('type: ${bannerMo.type} - ${bannerMo.url}');
+      //todo
+    }
   }
 }
