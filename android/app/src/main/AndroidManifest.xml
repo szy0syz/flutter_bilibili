@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.flutter_bilibili">
    <application
         android:label="flutter_bilibili"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="28"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
