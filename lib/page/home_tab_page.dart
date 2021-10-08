@@ -45,7 +45,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
                   child: _banner(),
                 );
               } else {
-                return VideoCard(videoModel: videoList[index]);
+                return VideoCard(videoMo: videoList[index]);
               }
             },
             staggeredTileBuilder: (int index) {

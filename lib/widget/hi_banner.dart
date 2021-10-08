@@ -49,8 +49,8 @@ class HiBanner extends StatelessWidget {
         padding: padding,
         child: ClipRRect(
           child: Image.network(
-            // bannerMo.cover,
-            "http://oss.yncce.cn/2021/02/01/20de3876d3f940a690d3b6ddbae87a46.jpeg",
+            bannerMo.cover,
+            // "http://oss.yncce.cn/2021/02/01/20de3876d3f940a690d3b6ddbae87a46.jpeg",
             fit: BoxFit.cover,
           ),
         ),

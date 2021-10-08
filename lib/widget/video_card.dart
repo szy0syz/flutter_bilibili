@@ -1,42 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
+import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/util/format_util.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 
+///视频卡片
 class VideoCard extends StatelessWidget {
-  final VideoModel videoModel;
+  final VideoModel videoMo;
 
-  const VideoCard({Key? key, required this.videoModel}) : super(key: key);
+  const VideoCard({Key? key, required this.videoMo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
-      child: SizedBox(
-        height: 200,
-        child: Card(
-          // 取消卡片默认边距
-          margin: EdgeInsets.only(left: 4, right: 4, bottom: 8),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _itemImage(context),
-                _infoText(),
-              ],
+        onTap: () {
+          print(videoMo.url);
+          HiNavigator.getInstance()
+              .onJumpTo(RouteStatus.detail, args: {"videoMo": videoMo});
+        },
+        child: SizedBox(
+          height: 200,
+          child: Card(
+            //取消卡片默认边距
+            margin: EdgeInsets.only(left: 4, right: 4, bottom: 8),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [_itemImage(context), _infoText()],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   _itemImage(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        cachedImage(videoModel.cover, width: size.width / 2 - 10, height: 120),
+        cachedImage(videoMo.cover, width: size.width / 2 - 10, height: 120),
         Positioned(
             left: 0,
             right: 0,
@@ -52,9 +54,9 @@ class VideoCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _iconText(Icons.ondemand_video, videoModel.view),
-                  _iconText(Icons.favorite_border, videoModel.favorite),
-                  _iconText(null, videoModel.duration),
+                  _iconText(Icons.ondemand_video, videoMo.view),
+                  _iconText(Icons.favorite_border, videoMo.favorite),
+                  _iconText(null, videoMo.duration),
                 ],
               ),
             ))
@@ -67,7 +69,7 @@ class VideoCard extends StatelessWidget {
     if (iconData != null) {
       views = countFormat(count);
     } else {
-      views = durationTransform(videoModel.duration);
+      views = durationTransform(videoMo.duration);
     }
     return Row(
       children: [
@@ -82,14 +84,50 @@ class VideoCard extends StatelessWidget {
 
   _infoText() {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.only(left: 5, top: 5, right: 8, bottom: 5),
-        child: Column(
+        child: Container(
+      padding: EdgeInsets.only(top: 5, left: 8, right: 8, bottom: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            videoMo.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 12, color: Colors.black87),
+          ),
+          //作者
+          _owner()
+        ],
+      ),
+    ));
+  }
+
+  _owner() {
+    var owner = videoMo.owner;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
           children: [
-            Text(videoModel.title)
+            ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: cachedImage(owner.face, height: 24, width: 24)),
+            Padding(
+              padding: EdgeInsets.only(left: 8),
+              child: Text(
+                owner.name,
+                style: TextStyle(fontSize: 11, color: Colors.black87),
+              ),
+            )
           ],
         ),
-      ),
+        Icon(
+          Icons.more_vert_sharp,
+          size: 15,
+          color: Colors.grey,
+        )
+      ],
     );
   }
 }
