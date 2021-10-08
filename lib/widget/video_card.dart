@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/util/format_util.dart';
-import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_bilibili/util/view_util.dart';
 
 class VideoCard extends StatelessWidget {
   final VideoModel videoModel;
@@ -23,6 +23,7 @@ class VideoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _itemImage(context),
+                _infoText(),
               ],
             ),
           ),
@@ -35,13 +36,7 @@ class VideoCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        FadeInImage.memoryNetwork(
-            // 默认宽度
-            width: size.width / 2 - 20,
-            height: 120,
-            placeholder: kTransparentImage,
-            image: videoModel.cover,
-            fit: BoxFit.cover),
+        cachedImage(videoModel.cover, width: size.width / 2 - 10, height: 120),
         Positioned(
             left: 0,
             right: 0,
@@ -49,16 +44,17 @@ class VideoCard extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.only(left: 8, right: 8, bottom: 3, top: 5),
               decoration: BoxDecoration(
-                  // 渐变
+                  //渐变
                   gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [Colors.black54, Colors.transparent])),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _iconText(Icons.ondemand_video, videoModel.view),
-                  _iconText(Icons.ondemand_video, videoModel.favorite),
-                  _iconText(null, videoModel.duration)
+                  _iconText(Icons.favorite_border, videoModel.favorite),
+                  _iconText(null, videoModel.duration),
                 ],
               ),
             ))
@@ -71,25 +67,29 @@ class VideoCard extends StatelessWidget {
     if (iconData != null) {
       views = countFormat(count);
     } else {
-      views = durationTrasform(videoModel.duration);
+      views = durationTransform(videoModel.duration);
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (iconData != null)
-          Icon(
-            iconData,
-            color: Colors.white,
-            size: 12,
-          ),
+        if (iconData != null) Icon(iconData, color: Colors.white, size: 12),
         Padding(
-          padding: EdgeInsets.only(left: 3),
-          child: Text(
-            views,
-            style: TextStyle(color: Colors.white, fontSize: 10),
-          ),
-        )
+            padding: EdgeInsets.only(left: 3),
+            child: Text(views,
+                style: TextStyle(color: Colors.white, fontSize: 10)))
       ],
+    );
+  }
+
+  _infoText() {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.only(left: 5, top: 5, right: 8, bottom: 5),
+        child: Column(
+          children: [
+            Text(videoModel.title)
+          ],
+        ),
+      ),
     );
   }
 }

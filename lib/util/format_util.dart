@@ -1,5 +1,5 @@
 // 时间转换 将秒转换为 分钟:秒
-String durationTrasform(int seconds) {
+String durationTransform(int seconds) {
   int m = (seconds / 60).truncate();
   int s = seconds - m * 60;
 
