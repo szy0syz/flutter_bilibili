@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 import 'dart:async';
 
 import 'package:chewie/src/center_play_button.dart';
