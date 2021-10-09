@@ -1,6 +1,8 @@
-import 'package:chewie/chewie.dart';
+import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
+import 'hi_video_controls.dart';
 
 class VideoView extends StatefulWidget {
   final String url;
@@ -8,13 +10,15 @@ class VideoView extends StatefulWidget {
   final bool autoPlay;
   final bool looping;
   final double aspectRatio;
+  final Widget? overlayUI;
 
   VideoView(this.url,
       {Key? key,
       this.cover,
       this.autoPlay = false,
       this.looping = false,
-      this.aspectRatio = 16 / 9})
+      this.aspectRatio = 16 / 9,
+      this.overlayUI})
       : super(key: key);
 
   @override
@@ -31,10 +35,18 @@ class _VideoViewState extends State<VideoView> {
     // 初始化播放器设置
     _videoPlayerController = VideoPlayerController.network(widget.url);
     _chewieController = ChewieController(
-        videoPlayerController: _videoPlayerController,
-        aspectRatio: widget.aspectRatio,
-        autoPlay: widget.autoPlay,
-        looping: widget.looping);
+      videoPlayerController: _videoPlayerController,
+      aspectRatio: widget.aspectRatio,
+      autoPlay: widget.autoPlay,
+      looping: widget.looping,
+      allowMuting: false,
+      allowPlaybackSpeedChanging: false,
+      customControls: MaterialControls(
+        showLoadingOnInitialize: false,
+        showBigPlayIcon: false,
+        overlayUI: widget.overlayUI,
+      ),
+    );
   }
 
   @override
