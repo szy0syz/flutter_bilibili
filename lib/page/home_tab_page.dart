@@ -58,6 +58,7 @@ class _HomeTabPageState extends State<HomeTabPage>
           removeTop: true,
           context: context,
           child: StaggeredGridView.countBuilder(
+              physics: const AlwaysScrollableScrollPhysics(),
               controller: _scrollController,
               padding: EdgeInsets.only(top: 10, left: 10, right: 10),
               crossAxisCount: 2,
