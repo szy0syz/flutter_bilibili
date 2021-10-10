@@ -189,3 +189,34 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
   }
 }
 ```
+
+```dart
+void initState() {
+  super.initState();
+
+  WidgetsBinding.instance?.addObserver(this);
+
+  _controller = TabController(length: categoryList.length, vsync: this);
+  HiNavigator.getInstance().addListener(this.listener = (current, pre) {
+    // this._currentPage = current.page;
+    print('home:current:${current.page}');
+    print('home:pre:${pre.page}');
+    if (widget == current.page || current.page is HomePage) {
+      print('首页: onResume');
+    } else if (widget == pre?.page || pre?.page is HomePage) {
+      print('首页: onPause');
+    }
+
+    // 当页面返回到首页恢复首页的状态栏样式
+    // 为什么出现这个问题，就是视频详情页引起的
+    if (pre?.page is VideoDetailPage && !(current.page is ProfilePage)) {
+      var statusStyle = StatusStyle.DARK_CONTENT;
+      changeStatusBar(color: Colors.white, statusStyle: statusStyle);
+    }
+  });
+
+  loadData();
+}
+```
+
+> 其实若有其他这样沉浸时状态栏页面切换修复也可以用这样的方式修复。
