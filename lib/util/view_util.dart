@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-enum StatusStyle { LIGHT_CONTENT, DARK_CONTENT }
+import 'package:flutter_bilibili/widget/navigation_bar.dart';
 
 ///带缓存的image
 Widget cachedImage(String url, {double? width, double? height}) {

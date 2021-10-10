@@ -95,6 +95,7 @@ class _VideoViewState extends State<VideoView> {
     );
   }
 
+  // 特别针对 iOS 修复退出全屏问题
   void _fullScreenListener() {
     Size size = MediaQuery.of(context).size;
     if (size.width > size.height) {

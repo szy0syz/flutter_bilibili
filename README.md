@@ -124,6 +124,39 @@ Widget build(BuildContext context) {
   }
 ```
 
-### 解决安卓和苹果系统沉浸式播放兼容
+### 解决安卓和苹果系统沉浸式播放状态栏兼容
 
 ![001](doc/img/001.png)
+
+```dart
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: MediaQuery.removePadding(
+      removeTop: Platform.isIOS,
+      context: context,
+      child: Column(children: [
+        // 修复iOS平台状态栏
+        NavigationBar(
+          color: Colors.black,
+          statusStyle: StatusStyle.LIGHT_CONTENT,
+          height: Platform.isAndroid ? 0 : 46,
+        ),
+        _videoView(),
+        Text('视频详情页, vid: ${widget.videlModel.vid}'),
+        Text('视频详情页, title: ${widget.videlModel.title}'),
+      ]),
+    ));
+  }
+```
+
+### iOS退出全屏问题修复
+
+```dart
+// 特别针对 iOS 修复退出全屏问题
+void _fullScreenListener() {
+  Size size = MediaQuery.of(context).size;
+  if (size.width > size.height) {
+    OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+  }
+}
+```
