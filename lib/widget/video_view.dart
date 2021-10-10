@@ -1,8 +1,11 @@
 import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bilibili/util/color.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:video_player/video_player.dart';
+import 'package:orientation/orientation.dart';
+
 
 import 'hi_video_controls.dart';
 
@@ -65,13 +68,15 @@ class _VideoViewState extends State<VideoView> {
       ),
       materialProgressColors: _progressColors
     );
+    _chewieController.addListener(_fullScreenListener);
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _chewieController.removeListener(_fullScreenListener);
     _videoPlayerController.dispose();
     _chewieController.dispose();
+    super.dispose();
   }
 
   @override
@@ -87,5 +92,12 @@ class _VideoViewState extends State<VideoView> {
         controller: _chewieController,
       ),
     );
+  }
+
+  void _fullScreenListener() {
+    Size size = MediaQuery.of(context).size;
+    if (size.width > size.height) {
+      OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+    }
   }
 }
