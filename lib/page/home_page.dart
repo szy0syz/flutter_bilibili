@@ -5,8 +5,10 @@ import 'package:flutter_bilibili/http/dao/home_dao.dart';
 import 'package:flutter_bilibili/model/home_mo.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/page/home_tab_page.dart';
+import 'package:flutter_bilibili/page/video_detail_page.dart';
 import 'package:flutter_bilibili/util/color.dart';
 import 'package:flutter_bilibili/util/toast.dart';
+import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/loading_container.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 import 'package:underline_indicator/underline_indicator.dart';
@@ -21,7 +23,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends HiState<HomePage>
-    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+    with
+        AutomaticKeepAliveClientMixin,
+        TickerProviderStateMixin,
+        WidgetsBindingObserver {
   var listener;
 
   // 太牛逼了，原来上下两个 TabBar 是通过这个 controller 联动的
@@ -31,18 +36,30 @@ class _HomePageState extends HiState<HomePage>
   List<CategoryMo> categoryList = [];
 
   bool _isLoading = true;
+  // Widget? _currentPage;
 
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance?.addObserver(this);
+
     _controller = TabController(length: categoryList.length, vsync: this);
     HiNavigator.getInstance().addListener(this.listener = (current, pre) {
+      // this._currentPage = current.page;
       print('home:current:${current.page}');
       print('home:pre:${pre.page}');
       if (widget == current.page || current.page is HomePage) {
         print('首页: onResume');
       } else if (widget == pre?.page || pre?.page is HomePage) {
         print('首页: onPause');
+      }
+
+      // 当页面返回到首页恢复首页的状态栏样式
+      // 为什么出现这个问题，就是视频详情页引起的
+      if (pre?.page is VideoDetailPage) {
+        var statusStyle = StatusStyle.DARK_CONTENT;
+        changeStatusBar(color: Colors.white, statusStyle: statusStyle);
       }
     });
 
@@ -51,9 +68,29 @@ class _HomePageState extends HiState<HomePage>
 
   @override
   void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
     HiNavigator.getInstance().removeListener(this.listener);
     _controller.dispose();
     super.dispose();
+  }
+
+  ///监听应用生命周期变化
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(':didChangeAppLifecycleState:$state');
+    switch (state) {
+      case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
+        break;
+      case AppLifecycleState.resumed: //从后台切换前台，界面可见
+        //fix Android压后台首页状态栏字体颜色变白，详情页状态栏字体变黑问题
+        changeStatusBar();
+        break;
+      case AppLifecycleState.paused: // 界面不可见，后台
+        break;
+      case AppLifecycleState.detached: // APP结束时调用
+        break;
+    }
   }
 
   @override
