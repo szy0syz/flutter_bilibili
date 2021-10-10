@@ -168,3 +168,24 @@ void _fullScreenListener() {
 - 有了这个监听我们就能每次后台进入修复一次状态栏问题
 - 这个时候我们需要让这个 `Widget` 去实现 `WidgetsBindingObserver` 这个抽象类
 - 然后就可以注册声明周期函数
+
+```dart
+///监听应用生命周期变化
+@override
+void didChangeAppLifecycleState(AppLifecycleState state) {
+  super.didChangeAppLifecycleState(state);
+  print(':didChangeAppLifecycleState:$state');
+  switch (state) {
+    case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
+      break;
+    case AppLifecycleState.resumed: //从后台切换前台，界面可见
+      //fix Android压后台首页状态栏字体颜色变白，详情页状态栏字体变黑问题
+      changeStatusBar();
+      break;
+    case AppLifecycleState.paused: // 界面不可见，后台
+      break;
+    case AppLifecycleState.detached: // APP结束时调用
+      break;
+  }
+}
+```
