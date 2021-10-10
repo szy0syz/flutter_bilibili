@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
+import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget {
@@ -34,6 +35,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
     return VideoView(
       model.url!,
       cover: model.cover,
+      overlayUI: videoAppBar(),
     );
   }
 }

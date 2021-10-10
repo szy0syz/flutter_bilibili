@@ -101,3 +101,25 @@ class _BiliAppState extends State<BiliApp> {
 - 当我们列表长度不足以撑满一个屏幕时，无法刷新，这样是不对的
   - 这个是 Flutter 的默认行为
   - `physics: const AlwaysScrollableScrollPhysics()`
+
+### BackButton
+
+```dart
+// 框架里 BackButton 源码节选
+// 可以不设置 onPressed，让它自动 Navigator 调用返回
+Widget build(BuildContext context) {
+    assert(debugCheckHasMaterialLocalizations(context));
+    return IconButton(
+      icon: const BackButtonIcon(),
+      color: color,
+      tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed!();
+        } else {
+          Navigator.maybePop(context);
+        }
+      },
+    );
+  }
+```

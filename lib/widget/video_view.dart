@@ -49,6 +49,7 @@ class _VideoViewState extends State<VideoView> {
 
   @override
   void initState() {
+    // 务必先初始化父类的
     super.initState();
     // 初始化播放器设置
     _videoPlayerController = VideoPlayerController.network(widget.url);
