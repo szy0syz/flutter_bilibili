@@ -5,6 +5,7 @@ import 'package:flutter_bilibili/http/dao/home_dao.dart';
 import 'package:flutter_bilibili/model/home_mo.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/page/home_tab_page.dart';
+import 'package:flutter_bilibili/page/profile_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
 import 'package:flutter_bilibili/util/color.dart';
 import 'package:flutter_bilibili/util/toast.dart';
@@ -57,7 +58,7 @@ class _HomePageState extends HiState<HomePage>
 
       // 当页面返回到首页恢复首页的状态栏样式
       // 为什么出现这个问题，就是视频详情页引起的
-      if (pre?.page is VideoDetailPage) {
+      if (pre?.page is VideoDetailPage && !(current.page is ProfilePage)) {
         var statusStyle = StatusStyle.DARK_CONTENT;
         changeStatusBar(color: Colors.white, statusStyle: statusStyle);
       }
