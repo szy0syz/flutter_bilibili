@@ -125,3 +125,5 @@ Widget build(BuildContext context) {
 ```
 
 ### 解决安卓和苹果系统沉浸式播放兼容
+
+![001](doc/img/001.png)
