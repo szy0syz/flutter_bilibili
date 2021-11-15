@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
+import 'package:flutter_bilibili/widget/hi_tab.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 import 'package:flutter_bilibili/widget/video_view.dart';
 
@@ -16,17 +17,24 @@ class VideoDetailPage extends StatefulWidget {
   _VideoDetailPageState createState() => _VideoDetailPageState();
 }
 
-class _VideoDetailPageState extends State<VideoDetailPage> {
+class _VideoDetailPageState extends State<VideoDetailPage>
+    with TickerProviderStateMixin {
+  late TabController _controller;
+  List tabs = ["简介", "评论(288)"];
+
   @override
   void initState() {
     super.initState();
     // 修复安卓平台黑色状态栏，不要沉浸式
     changeStatusBar(
         color: Colors.black, statusStyle: StatusStyle.LIGHT_CONTENT);
+
+    _controller = TabController(length: tabs.length, vsync: this);
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
@@ -43,14 +51,13 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
           statusStyle: StatusStyle.LIGHT_CONTENT,
           height: Platform.isAndroid ? 0 : 46,
         ),
-        _videoView(),
-        Text('视频详情页, vid: ${widget.videlModel.vid}'),
-        Text('视频详情页, title: ${widget.videlModel.title}'),
+        _buildVideoView(),
+        _buildTabNavigation(),
       ]),
     ));
   }
 
-  _videoView() {
+  _buildVideoView() {
     var model = widget.videlModel;
     if (model.url == null) {
       return Container(
@@ -62,6 +69,43 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
       model.url!,
       cover: model.cover,
       overlayUI: videoAppBar(),
+    );
+  }
+
+  _buildTabNavigation() {
+    return Material(
+      elevation: 5,
+      shadowColor: Colors.green[100],
+      child: Container(
+        height: 39,
+        color: Colors.white,
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.only(left: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _tabBar(),
+            Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Icon(
+                Icons.live_tv_rounded,
+                color: Colors.grey,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _tabBar() {
+    return HiTab(
+      tabs.map<Tab>((name) {
+        return Tab(
+          text: name,
+        );
+      }).toList(),
+      controller: _controller,
     );
   }
 }
