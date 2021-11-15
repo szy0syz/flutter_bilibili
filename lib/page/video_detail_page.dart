@@ -53,6 +53,16 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         ),
         _buildVideoView(),
         _buildTabNavigation(),
+        Flexible(
+            child: TabBarView(
+          controller: _controller,
+          children: [
+            _buildDetailList(),
+            Container(
+              child: Text("敬请期待..."),
+            )
+          ],
+        ))
       ]),
     ));
   }
@@ -73,6 +83,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   _buildTabNavigation() {
+    // 使用 Material 实现阴影效果
     return Material(
       elevation: 5,
       shadowColor: Colors.green[100],
@@ -108,4 +119,19 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       controller: _controller,
     );
   }
+
+  _buildDetailList() {
+    return ListView(
+      padding: const EdgeInsets.all(0),
+      children: [...buildContents()],
+    );
+  }
+}
+
+buildContents() {
+  return [
+    Container(
+      child: Text("1"),
+    )
+  ];
 }
