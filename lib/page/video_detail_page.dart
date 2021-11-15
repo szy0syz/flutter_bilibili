@@ -6,6 +6,7 @@ import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/hi_tab.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
+import 'package:flutter_bilibili/widget/video_header.dart';
 import 'package:flutter_bilibili/widget/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget {
@@ -126,12 +127,13 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       children: [...buildContents()],
     );
   }
-}
 
-buildContents() {
-  return [
-    Container(
-      child: Text("1"),
-    )
-  ];
+  buildContents() {
+    var model = widget.videlModel;
+    return [
+      Container(
+        child: VideoHeader(owner: model.owner),
+      )
+    ];
+  }
 }
