@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bilibili/http/core/hi_error.dart';
+import 'package:flutter_bilibili/http/dao/video_detail_dao.dart';
+import 'package:flutter_bilibili/model/video_detail_mo.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
+import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/expandable_content.dart';
@@ -11,9 +15,9 @@ import 'package:flutter_bilibili/widget/video_header.dart';
 import 'package:flutter_bilibili/widget/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget {
-  final VideoModel videlModel;
+  final VideoModel videoModel;
 
-  VideoDetailPage(this.videlModel);
+  VideoDetailPage(this.videoModel);
 
   @override
   _VideoDetailPageState createState() => _VideoDetailPageState();
@@ -23,6 +27,9 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     with TickerProviderStateMixin {
   late TabController _controller;
   List tabs = ["简介", "评论(288)"];
+  VideoDetailMo? videoDetailMo;
+  VideoModel? videoModel;
+  List<VideoModel> videoList = [];
 
   @override
   void initState() {
@@ -32,6 +39,8 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         color: Colors.black, statusStyle: StatusStyle.LIGHT_CONTENT);
 
     _controller = TabController(length: tabs.length, vsync: this);
+    videoModel = widget.videoModel;
+    _loadData();
   }
 
   @override
@@ -70,7 +79,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   _buildVideoView() {
-    var model = widget.videlModel;
+    var model = widget.videoModel;
     if (model.url == null) {
       return Container(
         child: Text("视频url无效"),
@@ -139,12 +148,28 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   buildContents() {
-    var model = widget.videlModel;
+    var model = widget.videoModel;
     return [
       Container(
         child: VideoHeader(owner: model.owner),
       ),
       ExpandableContent(mo: model)
     ];
+  }
+
+  void _loadData() async {
+    try {
+      VideoDetailMo result = await VideoDetailDao.get(widget.videoModel.vid);
+      print(result);
+
+      setState(() {
+        videoDetailMo = result;
+      });
+    }on NeedAuth catch (e) {
+      print(e);
+      showWarnToast(e.message);
+    }on HiNetError catch (e) {
+      print(e);
+    }
   }
 }
