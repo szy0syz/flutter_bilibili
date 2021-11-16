@@ -43,6 +43,14 @@ class VideoToolBar extends StatelessWidget {
             onClick: onLike,
             tint: detailModel.isLike,
           ),
+          _buildIconText(Icons.thumb_down_alt_rounded, '不喜欢',
+              onClick: onUnLike),
+          _buildIconText(Icons.monetization_on, videoModel.coin,
+              onClick: onCoin),
+          _buildIconText(Icons.grade_rounded, videoModel.favorite,
+              onClick: onFavorite, tint: detailModel.isFavorite),
+          _buildIconText(Icons.share_rounded, videoModel.share,
+              onClick: onShare),
         ],
       ),
     );
@@ -62,6 +70,7 @@ class VideoToolBar extends StatelessWidget {
           Icon(
             iconData,
             color: tint ? primary : Colors.grey,
+            size: 20,
           ),
           hiSpace(height: 5),
           Text(text, style: TextStyle(color: Colors.grey, fontSize: 12))

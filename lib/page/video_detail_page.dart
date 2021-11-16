@@ -12,6 +12,7 @@ import 'package:flutter_bilibili/widget/expandable_content.dart';
 import 'package:flutter_bilibili/widget/hi_tab.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 import 'package:flutter_bilibili/widget/video_header.dart';
+import 'package:flutter_bilibili/widget/video_toolbar.dart';
 import 'package:flutter_bilibili/widget/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget {
@@ -79,15 +80,15 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   _buildVideoView() {
-    var model = widget.videoModel;
-    if (model.url == null) {
+    var model = videoModel;
+    if (model?.url == null) {
       return Container(
         child: Text("视频url无效"),
       );
     }
 
     return VideoView(
-      model.url!,
+      model!.url!,
       cover: model.cover,
       overlayUI: videoAppBar(),
     );
@@ -148,28 +149,42 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   buildContents() {
-    var model = widget.videoModel;
     return [
-      Container(
-        child: VideoHeader(owner: model.owner),
-      ),
-      ExpandableContent(mo: model)
+      VideoHeader(owner: videoModel!.owner),
+      ExpandableContent(mo: videoModel!),
+      VideoToolBar(
+        detailModel: videoDetailMo!,
+        videoModel: videoModel!,
+        onLike: _doLike,
+        onUnLike: _onUnLike,
+        onFavorite: _onFavorite,
+      )
     ];
   }
 
   void _loadData() async {
     try {
-      VideoDetailMo result = await VideoDetailDao.get(widget.videoModel.vid);
+      VideoDetailMo result = await VideoDetailDao.get(videoModel!.vid);
       print(result);
 
       setState(() {
         videoDetailMo = result;
+        // 二次更新VideoModel
+        videoModel = result.videoInfo;
       });
-    }on NeedAuth catch (e) {
+    } on NeedAuth catch (e) {
       print(e);
       showWarnToast(e.message);
-    }on HiNetError catch (e) {
+    } on HiNetError catch (e) {
       print(e);
     }
+  }
+
+  void _doLike() {}
+
+  void _onUnLike() {
+  }
+
+  void _onFavorite() {
   }
 }
