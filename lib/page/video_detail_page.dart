@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
+import 'package:flutter_bilibili/widget/expandable_content.dart';
 import 'package:flutter_bilibili/widget/hi_tab.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 import 'package:flutter_bilibili/widget/video_header.dart';
@@ -133,7 +134,8 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     return [
       Container(
         child: VideoHeader(owner: model.owner),
-      )
+      ),
+      ExpandableContent(mo: model)
     ];
   }
 }
