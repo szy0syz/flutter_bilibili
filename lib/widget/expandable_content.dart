@@ -51,7 +51,8 @@ class _ExpandableContentState extends State<ExpandableContent>
         children: [
           _buildTitle(),
           Padding(padding: const EdgeInsets.only(bottom: 8)),
-          _buildInfo()
+          _buildInfo(),
+          _buildDesc()
         ],
       ),
     );
@@ -113,5 +114,32 @@ class _ExpandableContentState extends State<ExpandableContent>
         Text('    $dateStr', style: style)
       ],
     );
+  }
+
+  _buildDesc() {
+    var child = _expand
+        ? Text(
+            widget.mo.desc,
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          )
+        : null;
+
+    // 构建动画的通用widget
+    return AnimatedBuilder(
+        animation: _controller.view,
+        child: child,
+        builder: (BuildContext context, Widget? child) {
+          return Align(
+            heightFactor: _heightFactor.value,
+            //修复：从布局之上的位置开始展开
+            alignment: Alignment.topCenter,
+            child: Container(
+              // 撑满宽度后，让内容顶部居左对齐
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(top: 8),
+              child: child,
+            ),
+          );
+        });
   }
 }

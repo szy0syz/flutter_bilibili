@@ -125,7 +125,16 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   _buildDetailList() {
     return ListView(
       padding: const EdgeInsets.all(0),
-      children: [...buildContents()],
+      children: [
+        ...buildContents(),
+        Container(
+          height: 500,
+          margin: const EdgeInsets.only(top: 10),
+          alignment: Alignment.topLeft,
+          decoration: BoxDecoration(color: Colors.lightBlueAccent),
+          child: Text("展开列表"),
+        )
+      ],
     );
   }
 
