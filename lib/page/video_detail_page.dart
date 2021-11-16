@@ -56,26 +56,29 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         body: MediaQuery.removePadding(
       removeTop: Platform.isIOS,
       context: context,
-      child: Column(children: [
-        // 修复iOS平台状态栏
-        NavigationBar(
-          color: Colors.black,
-          statusStyle: StatusStyle.LIGHT_CONTENT,
-          height: Platform.isAndroid ? 0 : 46,
-        ),
-        _buildVideoView(),
-        _buildTabNavigation(),
-        Flexible(
-            child: TabBarView(
-          controller: _controller,
-          children: [
-            _buildDetailList(),
-            Container(
-              child: Text("敬请期待..."),
-            )
-          ],
-        ))
-      ]),
+      child: videoModel?.url != null
+          ? Column(children: [
+              // 修复iOS平台状态栏
+              NavigationBar(
+                color: Colors.black,
+                statusStyle: StatusStyle.LIGHT_CONTENT,
+                height: Platform.isAndroid ? 0 : 46,
+              ),
+              _buildVideoView(),
+              _buildTabNavigation(),
+              Flexible(
+                child: TabBarView(
+                  controller: _controller,
+                  children: [
+                    _buildDetailList(),
+                    Container(
+                      child: Text("敬请期待..."),
+                    )
+                  ],
+                ),
+              )
+            ])
+          : Container(),
     ));
   }
 
@@ -182,9 +185,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   void _doLike() {}
 
-  void _onUnLike() {
-  }
+  void _onUnLike() {}
 
-  void _onFavorite() {
-  }
+  void _onFavorite() {}
 }
