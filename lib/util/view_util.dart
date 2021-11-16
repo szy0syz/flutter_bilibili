@@ -75,3 +75,18 @@ smallIconText(IconData iconData, var text) {
     Text(' $text', style: style)
   ];
 }
+
+///border线
+borderLine(BuildContext context, {bottom: true, top: false}) {
+  BorderSide borderSide = BorderSide(width: 0.5, color: Colors.grey);
+
+  return Border(
+    bottom: bottom ? borderSide : BorderSide.none,
+    top: top ? borderSide : BorderSide.none,
+  );
+}
+
+///全局统一的间距小组件
+SizedBox hiSpace({double height: 1, double width: 1}) {
+  return SizedBox(height: height, width: width);
+}
