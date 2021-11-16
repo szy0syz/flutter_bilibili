@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bilibili/util/format_util.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 
 ///带缓存的image
@@ -61,4 +62,16 @@ void changeStatusBar(
     statusBarBrightness: brightness,
     statusBarIconBrightness: brightness,
   ));
+}
+
+/// 带文字的小图标
+smallIconText(IconData iconData, var text) {
+  var style = TextStyle(fontSize: 12, color: Colors.grey);
+  if (text is int) {
+    text = countFormat(text);
+  }
+  return [
+    Icon(iconData, color: Colors.grey, size: 12),
+    Text(' $text', style: style)
+  ];
 }

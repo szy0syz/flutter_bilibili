@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
+import 'package:flutter_bilibili/util/view_util.dart';
 
 /// 可展开的Widget组件
 class ExpandableContent extends StatefulWidget {
@@ -49,7 +50,8 @@ class _ExpandableContentState extends State<ExpandableContent>
       child: Column(
         children: [
           _buildTitle(),
-          Padding(padding: const EdgeInsets.only(bottom: 8))
+          Padding(padding: const EdgeInsets.only(bottom: 8)),
+          _buildInfo()
         ],
       ),
     );
@@ -57,7 +59,7 @@ class _ExpandableContentState extends State<ExpandableContent>
 
   _buildTitle() {
     return InkWell(
-      onDoubleTap: _toggleExpand,
+      onTap: _toggleExpand,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,11 +77,41 @@ class _ExpandableContentState extends State<ExpandableContent>
             _expand
                 ? Icons.keyboard_arrow_up_sharp
                 : Icons.keyboard_arrow_down_sharp,
+            color: Colors.grey,
+            size: 16,
           )
         ],
       ),
     );
   }
 
-  void _toggleExpand() {}
+  void _toggleExpand() {
+    setState(() {
+      _expand = !_expand;
+
+      if (_expand) {
+        // 正向执行动画
+        _controller.forward();
+      } else {
+        // 反向执行动画
+        _controller.reverse();
+      }
+    });
+  }
+
+  _buildInfo() {
+    var style = TextStyle(fontSize: 12, color: Colors.grey);
+    var dateStr = widget.mo.createTime.length > 10
+        ? widget.mo.createTime.substring(5, 10)
+        : widget.mo.createTime;
+
+    return Row(
+      children: [
+        ...smallIconText(Icons.ondemand_video, widget.mo.view),
+        Padding(padding: const EdgeInsets.only(left: 10)),
+        ...smallIconText(Icons.list_alt, widget.mo.reply),
+        Text('    $dateStr', style: style)
+      ],
+    );
+  }
 }
