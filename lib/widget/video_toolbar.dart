@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_detail_mo.dart';
 import 'package:flutter_bilibili/model/video_model.dart';

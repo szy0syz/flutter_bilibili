@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/http/core/hi_error.dart';
+import 'package:flutter_bilibili/http/dao/favorite_dao.dart';
 import 'package:flutter_bilibili/http/dao/video_detail_dao.dart';
 import 'package:flutter_bilibili/model/video_detail_mo.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
@@ -187,5 +188,30 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   void _onUnLike() {}
 
-  void _onFavorite() {}
+  void _onFavorite() async {
+    try {
+      if (videoDetailMo ==null || videoModel == null) return;
+      var result = await FavoriteDao.favorite(videoModel!.vid, !videoDetailMo!.isFavorite);
+      print(result);
+      videoDetailMo!.isFavorite = !videoDetailMo!.isFavorite;
+      if (videoDetailMo!.isFavorite) {
+        videoModel!.favorite += 1;
+      } else {
+        videoModel!.favorite -= 1;
+      }
+
+      setState(() {
+        videoModel = videoModel;
+        videoDetailMo = videoDetailMo;
+      });
+
+      showToast(result['msg']);
+    } on NeedAuth catch (e) {
+      print(e);
+      showWarnToast(e.message);
+    } on HiNetError catch (e) {
+      print(e);
+    }
+    
+  }
 }
