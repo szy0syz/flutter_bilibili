@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/favorite_dao.dart';
+import 'package:flutter_bilibili/http/dao/like_dao.dart';
 import 'package:flutter_bilibili/http/dao/video_detail_dao.dart';
 import 'package:flutter_bilibili/model/video_detail_mo.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
@@ -152,7 +153,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         detailModel: videoDetailMo!,
         videoModel: videoModel!,
         onLike: _doLike,
-        onUnLike: _onUnLike,
+        onUnLike: _doLike,
         onFavorite: _onFavorite,
       )
     ];
@@ -177,9 +178,31 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     }
   }
 
-  void _doLike() {}
+  _doLike() async {
+    // 会根据当前isLike自动判断取消还是喜欢
+    try {
+      var result = await LikeDao.like(videoModel!.vid, !videoDetailMo!.isLike);
+      print(result);
+      videoDetailMo!.isLike = !videoDetailMo!.isLike;
+      if (videoDetailMo!.isLike) {
+        videoModel!.like += 1;
+      } else {
+        videoModel!.like -= 1;
+      }
+      setState(() {
+        videoDetailMo = videoDetailMo;
+        videoModel = videoModel;
+      });
+      showToast(result['msg']);
+    } on NeedAuth catch (e) {
+      print(e);
+      showWarnToast(e.message);
+    } on HiNetError catch (e) {
+      print(e);
+    }
+  }
 
-  void _onUnLike() {}
+  // void _onUnLike() async {}
 
   void _onFavorite() async {
     try {
