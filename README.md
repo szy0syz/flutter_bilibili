@@ -222,3 +222,107 @@ void initState() {
 > 其实若有其他这样沉浸时状态栏页面切换修复也可以用这样的方式修复。
 
 - 要注意避免Flutter嵌套太深而导致的代码可读性差的问题，需考虑使用扁平化的代码构造
+
+### 封装TabView上下拉刷新
+
+```dart
+abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
+    with AutomaticKeepAliveClientMixin {
+  int pageInde = 1;
+  List<L> dataList = [];
+  bool loading = false;
+
+  ScrollController scrollController = ScrollController();
+
+  get contentChild;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      // 最大可滚动距离 - 当前滚动距离
+      var distance = scrollController.position.maxScrollExtent -
+          scrollController.position.pixels;
+      if (distance < 300 && !loading) {
+        loadData(loadMore: true);
+      }
+    });
+    loadData();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return RefreshIndicator(
+      child: MediaQuery.removePadding(
+        removeTop: true,
+        context: context,
+        child: contentChild,
+      ),
+      onRefresh: loadData,
+      color: primary,
+    );
+  }
+
+  /// 根据对应页码获取相应数据
+  Future<M> getData(int pageIndex);
+
+  ///从M中解析出list数据
+  List<L> parseList(M result);
+
+  Future<void> loadData({loadMore = false}) async {
+    if (loading) {
+      print("...上次加载还没完成...");
+      return;
+    }
+
+    loading = true;
+
+    if (!loadMore) {
+      pageInde = 1;
+    }
+    var currentIndex = pageInde + (loadMore ? 1 : 0);
+    try {
+      var result = await getData(currentIndex);
+
+      setState(() {
+        if (loadMore) {
+          var newList = parseList(result);
+          if (newList.isNotEmpty) {
+            dataList = [...dataList, ...newList];
+            
+            if (newList.length != 0) {
+              pageInde++;
+            }
+          }
+        } else {
+          dataList = parseList(result);
+        }
+      });
+
+      Future.delayed(Duration(milliseconds: 1000), () {
+        loading = false;
+      });
+    } on NeedAuth catch (e) {
+      loading = false;
+      print(e);
+      showWarnToast(e.message);
+    } on HiNetError catch (e) {
+      loading = false;
+      print(e);
+      showWarnToast(e.message);
+    }
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+```
+
+> **感受 `OO` 的强大！**
