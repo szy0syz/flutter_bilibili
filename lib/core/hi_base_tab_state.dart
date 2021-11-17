@@ -24,7 +24,9 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
       var distance = scrollController.position.maxScrollExtent -
           scrollController.position.pixels;
       print('Distance: ${distance.toString()}');
-      if (distance < 300 && !loading) {
+      // 到底边距离小于300 并 没在执行加载异步 并整个容器可滚动距离不能为0
+      // fix 当列表高度不满屏幕高度时不执行加载更多
+      if (distance < 300 && !loading && scrollController.position.maxScrollExtent != 0) {
         print('----loading----');
         loadData(loadMore: true);
       }
