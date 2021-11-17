@@ -13,6 +13,7 @@ import 'package:flutter_bilibili/widget/expandable_content.dart';
 import 'package:flutter_bilibili/widget/hi_tab.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 import 'package:flutter_bilibili/widget/video_header.dart';
+import 'package:flutter_bilibili/widget/video_large_card.dart';
 import 'package:flutter_bilibili/widget/video_toolbar.dart';
 import 'package:flutter_bilibili/widget/video_view.dart';
 
@@ -139,20 +140,11 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   _buildDetailList() {
     return ListView(
       padding: const EdgeInsets.all(0),
-      children: [
-        ...buildContents(),
-        Container(
-          height: 500,
-          margin: const EdgeInsets.only(top: 10),
-          alignment: Alignment.topLeft,
-          decoration: BoxDecoration(color: Colors.lightBlueAccent),
-          child: Text("展开列表"),
-        )
-      ],
+      children: [..._buildContents(), ..._buildVideoList()],
     );
   }
 
-  buildContents() {
+  _buildContents() {
     return [
       VideoHeader(owner: videoModel!.owner),
       ExpandableContent(mo: videoModel!),
@@ -173,8 +165,9 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
       setState(() {
         videoDetailMo = result;
-        // 二次更新VideoModel
+        // 二次更新旧的VideoModel
         videoModel = result.videoInfo;
+        videoList = result.videoList;
       });
     } on NeedAuth catch (e) {
       print(e);
@@ -190,8 +183,9 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
   void _onFavorite() async {
     try {
-      if (videoDetailMo ==null || videoModel == null) return;
-      var result = await FavoriteDao.favorite(videoModel!.vid, !videoDetailMo!.isFavorite);
+      if (videoDetailMo == null || videoModel == null) return;
+      var result = await FavoriteDao.favorite(
+          videoModel!.vid, !videoDetailMo!.isFavorite);
       print(result);
       videoDetailMo!.isFavorite = !videoDetailMo!.isFavorite;
       if (videoDetailMo!.isFavorite) {
@@ -212,6 +206,11 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     } on HiNetError catch (e) {
       print(e);
     }
-    
+  }
+
+  _buildVideoList() {
+    return videoList
+        .map((VideoModel mo) => VideoLargeCard(videoModel: mo))
+        .toList();
   }
 }
