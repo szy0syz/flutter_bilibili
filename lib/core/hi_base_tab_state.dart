@@ -12,17 +12,17 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
   List<L> dataList = [];
   bool loading = false;
 
-  ScrollController _scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
 
   get contentChild;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
+    scrollController.addListener(() {
       // 最大可滚动距离 - 当前滚动距离
-      var distance = _scrollController.position.maxScrollExtent -
-          _scrollController.position.pixels;
+      var distance = scrollController.position.maxScrollExtent -
+          scrollController.position.pixels;
       print('Distance: ${distance.toString()}');
       if (distance < 300 && !loading) {
         print('----loading----');
@@ -34,7 +34,7 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
