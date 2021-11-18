@@ -29,9 +29,9 @@ class _HomeTabPageState
   }
 
   _banner() {
-    return Padding(
-      padding: EdgeInsets.only(left: 5, right: 5),
-      child: HiBanner(widget.bannerList!),
+    return HiBanner(
+      widget.bannerList!,
+      padding: const EdgeInsets.only(left: 5, right: 5),
     );
   }
 
