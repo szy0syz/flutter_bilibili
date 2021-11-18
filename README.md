@@ -325,7 +325,7 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 }
 ```
 
-> 这个抽象类的封装，感觉是领略了**`面向对象`的强大！**
+> 这个抽象类的封装，感觉是领略了 `面向对象` 的 **强大**
 >
 > 面向抽象编程！
 
