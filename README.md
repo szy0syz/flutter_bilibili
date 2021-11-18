@@ -325,4 +325,8 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 }
 ```
 
-> **感受 `OO` 的强大！**
+> **领略了 `面向对象` 的强大！**
+
+### Flutter中的渲染机制
+
+![3tree](doc/img/flutter-three-tree.jpg)
