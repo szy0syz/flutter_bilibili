@@ -4,6 +4,7 @@ import 'package:flutter_bilibili/http/dao/profile_dao.dart';
 import 'package:flutter_bilibili/model/profile_mo.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:flutter_bilibili/widget/hi_blur.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -34,9 +35,19 @@ class _ProfilePageState extends State<ProfilePage> {
               pinned: true,
               // 定义滚动的空间
               flexibleSpace: FlexibleSpaceBar(
+                // 支持连带的视差滚动效果
+                collapseMode: CollapseMode.parallax,
                 titlePadding: const EdgeInsets.only(left: 0),
                 title: _buildTitle(),
-                background: Container(color: Colors.deepOrangeAccent),
+                background: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: cachedImage(
+                          "https://www.devio.org/img/beauty_camera/beauty_camera4.jpg"),
+                    ),
+                    Positioned.fill(child: Hiblur(sigma: 20)),
+                  ],
+                ),
               ),
             )
           ];
