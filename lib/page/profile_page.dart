@@ -4,6 +4,7 @@ import 'package:flutter_bilibili/http/dao/profile_dao.dart';
 import 'package:flutter_bilibili/model/profile_mo.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:flutter_bilibili/widget/hi_banner.dart';
 import 'package:flutter_bilibili/widget/hi_blur.dart';
 import 'package:flutter_bilibili/widget/hi_flexible_header.dart';
 
@@ -14,7 +15,9 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+/// AutomaticKeepAliveClientMixin 切换tab时存活
+class _ProfilePageState extends State<ProfilePage>
+    with AutomaticKeepAliveClientMixin {
   late ProfileMo? _profileMo;
   late ScrollController _controller;
 
@@ -26,42 +29,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: NestedScrollView(
         controller: _controller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar(
-              // 设置顶部扩展的可滚动高度
-              expandedHeight: 160,
-              // 标题栏是否固定
-              pinned: true,
-              // 定义滚动的空间
-              flexibleSpace: FlexibleSpaceBar(
-                // 支持连带的视差滚动效果
-                collapseMode: CollapseMode.parallax,
-                titlePadding: const EdgeInsets.only(left: 0),
-                title: _buildHeader(),
-                background: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: cachedImage(
-                          "https://www.devio.org/img/beauty_camera/beauty_camera4.jpg"),
-                    ),
-                    Positioned.fill(child: Hiblur(sigma: 20)),
-                  ],
-                ),
-              ),
-            )
+            _buildAppBar(),
           ];
         },
-        body: ListView.builder(
-            itemCount: 20,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text("标题$index"),
-              );
-            }),
+        body: ListView(
+          children: [..._buildContentList()],
+        ),
       ),
     );
   }
@@ -88,5 +67,51 @@ class _ProfilePageState extends State<ProfilePage> {
         name: _profileMo!.name,
         face: _profileMo!.face,
         controller: _controller);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
+  _buildAppBar() {
+    return SliverAppBar(
+      // 设置顶部扩展的可滚动高度
+      expandedHeight: 160,
+      // 标题栏是否固定
+      pinned: true,
+      // 定义滚动的空间
+      flexibleSpace: FlexibleSpaceBar(
+        // 支持连带的视差滚动效果
+        collapseMode: CollapseMode.parallax,
+        titlePadding: const EdgeInsets.only(left: 0),
+        title: _buildHeader(),
+        background: Stack(
+          children: [
+            Positioned.fill(
+              child: cachedImage(
+                  "https://www.devio.org/img/beauty_camera/beauty_camera4.jpg"),
+            ),
+            Positioned.fill(child: Hiblur(sigma: 20)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildContentList() {
+    if (_profileMo == null) {
+      return [];
+    }
+
+    return [
+      _buildBanner(),
+    ];
+  }
+
+  _buildBanner() {
+    return HiBanner(
+      _profileMo!.bannerList,
+      bannerHeight: 120,
+      padding: const EdgeInsets.only(top: 10, right: 10),
+    );
   }
 }
