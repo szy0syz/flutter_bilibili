@@ -5,6 +5,7 @@ import 'package:flutter_bilibili/model/profile_mo.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/hi_blur.dart';
+import 'package:flutter_bilibili/widget/hi_flexible_header.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late ProfileMo? _profileMo;
+  late ScrollController _controller;
 
   @override
   void initState() {
@@ -26,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+        controller: _controller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
@@ -38,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // 支持连带的视差滚动效果
                 collapseMode: CollapseMode.parallax,
                 titlePadding: const EdgeInsets.only(left: 0),
-                title: _buildTitle(),
+                title: _buildHeader(),
                 background: Stack(
                   children: [
                     Positioned.fill(
@@ -79,25 +82,11 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  _buildTitle() {
+  _buildHeader() {
     if (_profileMo == null) return Container();
-
-    return Container(
-      alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.only(bottom: 30, left: 10),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(23),
-            child: cachedImage(_profileMo!.face, width: 46, height: 46),
-          ),
-          hiSpace(width: 8),
-          Text(
-            _profileMo!.name,
-            style: TextStyle(fontSize: 11, color: Colors.black54),
-          )
-        ],
-      ),
-    );
+    return HiFlexibleHeader(
+        name: _profileMo!.name,
+        face: _profileMo!.face,
+        controller: _controller);
   }
 }
