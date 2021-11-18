@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage>
           ];
         },
         body: ListView(
+          padding: const EdgeInsets.only(top: 10),
           children: [..._buildContentList()],
         ),
       ),
@@ -88,9 +89,16 @@ class _ProfilePageState extends State<ProfilePage>
           children: [
             Positioned.fill(
               child: cachedImage(
-                  "https://www.devio.org/img/beauty_camera/beauty_camera4.jpg"),
+                "https://www.devio.org/img/beauty_camera/beauty_camera4.jpg",
+              ),
             ),
             Positioned.fill(child: Hiblur(sigma: 20)),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _buildProfileTab(),
+            )
           ],
         ),
       ),
@@ -112,6 +120,39 @@ class _ProfilePageState extends State<ProfilePage>
       _profileMo!.bannerList,
       bannerHeight: 120,
       padding: const EdgeInsets.only(top: 10, right: 10),
+    );
+  }
+
+  _buildProfileTab() {
+    if (_profileMo == null) return Container();
+    return Container(
+      padding: const EdgeInsets.only(top: 5, bottom: 5),
+      decoration: BoxDecoration(color: Colors.white54),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildIconText("收藏", _profileMo!.favorite),
+          _buildIconText("点赞", _profileMo!.like),
+          _buildIconText("浏览", _profileMo!.browsing),
+          _buildIconText("金币", _profileMo!.coin),
+          _buildIconText("粉丝", _profileMo!.fans),
+        ],
+      ),
+    );
+  }
+
+  _buildIconText(String text, int count) {
+    return Column(
+      children: [
+        Text(
+          "$count",
+          style: TextStyle(fontSize: 15, color: Colors.black87),
+        ),
+        Text(
+          text,
+          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+        ),
+      ],
     );
   }
 }
