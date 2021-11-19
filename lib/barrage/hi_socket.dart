@@ -7,8 +7,12 @@ import 'package:web_socket_channel/io.dart';
 /// 负责和后端进行websocket通信
 class HiSocket extends ISocket {
   static const _URL = 'wss://api.devio.org/uapi/fa/barrage/BV1qt411j7fV';
+
   IOWebSocketChannel _channel;
   ValueChanged<List<BarrageModel>> _callback;
+
+  // 心跳间隔秒数，根据服务器实际timeout时间来跳转，这里Nginx服务的timeout为60
+  int _intervalSeconds = 50;
 
   @override
   void close() {}
@@ -20,7 +24,19 @@ class HiSocket extends ISocket {
 
   @override
   ISocket open(String vid) {
-    _channel = IOWebSocketChannel.connect(_URL + vid, headers: _headers());
+    _channel = IOWebSocketChannel.connect(
+      _URL + vid,
+      headers: _headers(),
+      pingInterval: Duration(seconds: _intervalSeconds),
+    );
+
+    _channel.stream.handleError((error) {
+      print(error);
+    }).listen((message) {
+      _handleMessage(message);
+    });
+
+    return this;
   }
 
   _headers() {
@@ -38,6 +54,8 @@ class HiSocket extends ISocket {
   ISocket send(String message) {
     throw UnimplementedError();
   }
+
+  void _handleMessage(message) {}
 }
 
 abstract class ISocket {
