@@ -339,6 +339,10 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ### How Flutter Renders Widgets
 
+> A widget is an immutable description of part of a user interface.
+>
+> Widget: describes the configuration for an Element.
+
 ![3tree](doc/img/f1.gif)
 
 ## Flutter应用的架构
