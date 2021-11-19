@@ -59,7 +59,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         body: MediaQuery.removePadding(
       removeTop: Platform.isIOS,
       context: context,
-      child: videoModel?.url != null
+      child: (videoModel !=null && videoModel?.url != null)
           ? Column(children: [
               // 修复iOS平台状态栏
               NavigationBar(
@@ -150,7 +150,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       VideoHeader(owner: videoModel!.owner),
       ExpandableContent(mo: videoModel!),
       VideoToolBar(
-        detailModel: videoDetailMo!,
+        detailModel: videoDetailMo,
         videoModel: videoModel!,
         onLike: _doLike,
         onUnLike: _doLike,

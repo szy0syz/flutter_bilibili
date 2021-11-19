@@ -7,7 +7,7 @@ import 'package:flutter_bilibili/util/view_util.dart';
 
 /// 视频点赞分享收藏等工具栏
 class VideoToolBar extends StatelessWidget {
-  final VideoDetailMo detailModel;
+  final VideoDetailMo? detailModel;
   final VideoModel videoModel;
   final VoidCallback? onLike;
   final VoidCallback? onUnLike;
@@ -39,14 +39,14 @@ class VideoToolBar extends StatelessWidget {
             Icons.thumb_up_alt_rounded,
             videoModel.like,
             onClick: onLike,
-            tint: detailModel.isLike,
+            tint: detailModel?.isLike ?? false,
           ),
           _buildIconText(Icons.thumb_down_alt_rounded, '不喜欢',
               onClick: onUnLike),
           _buildIconText(Icons.monetization_on, videoModel.coin,
               onClick: onCoin),
           _buildIconText(Icons.grade_rounded, videoModel.favorite,
-              onClick: onFavorite, tint: detailModel.isFavorite),
+              onClick: onFavorite, tint: detailModel?.isFavorite ?? false),
           _buildIconText(Icons.share_rounded, videoModel.share,
               onClick: onShare),
         ],

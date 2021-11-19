@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_bilibili/model/profile_mo.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/hi_blur.dart';
@@ -35,11 +36,11 @@ class BenefitCard extends StatelessWidget {
         ));
   }
 
-  _buildCard(BuildContext context, Benefit mo, double width) {
+  _buildCard(BuildContext context,int index, Benefit mo, double width) {
     return InkWell(
       onTap: () {
         //todo
-        print('复制到剪切板与打开H5');
+        print('复制到剪切板与打开H5 $index');
       },
       child: Padding(
         padding: EdgeInsets.only(right: 5),
@@ -74,7 +75,7 @@ class BenefitCard extends StatelessWidget {
         benefitList.length;
     return Row(
       children: [
-        ...benefitList.map((e) => _buildCard(context, e, width)).toSet()
+        ...benefitList.mapIndexed((i, e) => _buildCard(context, i, e, width)).toSet()
       ],
     );
   }

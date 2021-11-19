@@ -20,8 +20,8 @@ class ProfilePage extends StatefulWidget {
 /// AutomaticKeepAliveClientMixin 切换tab时存活
 class _ProfilePageState extends State<ProfilePage>
     with AutomaticKeepAliveClientMixin {
-  late ProfileMo? _profileMo;
-  late ScrollController _controller;
+  ProfileMo? _profileMo;
+  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
