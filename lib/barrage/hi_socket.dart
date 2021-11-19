@@ -8,8 +8,8 @@ import 'package:web_socket_channel/io.dart';
 class HiSocket extends ISocket {
   static const _URL = 'wss://api.devio.org/uapi/fa/barrage/BV1qt411j7fV';
 
-  IOWebSocketChannel _channel;
-  ValueChanged<List<BarrageModel>> _callback;
+  late IOWebSocketChannel _channel;
+  late ValueChanged<List<BarrageModel>> _callback;
 
   // 心跳间隔秒数，根据服务器实际timeout时间来跳转，这里Nginx服务的timeout为60
   int _intervalSeconds = 50;
