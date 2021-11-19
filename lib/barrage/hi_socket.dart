@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/model/barrage_model.dart';
+import 'package:flutter_bilibili/util/hi_constants.dart';
+import 'package:web_socket_channel/io.dart';
 
 /// 负责和后端进行websocket通信
 class HiSocket extends ISocket {
+  static const _URL = 'wss://api.devio.org/uapi/fa/barrage/BV1qt411j7fV';
+  IOWebSocketChannel _channel;
+  ValueChanged<List<BarrageModel>> _callback;
+
   @override
-  void close() {
-  }
+  void close() {}
 
   @override
   ISocket listen(ValueChanged<List<BarrageModel>> callback) {
@@ -14,7 +20,18 @@ class HiSocket extends ISocket {
 
   @override
   ISocket open(String vid) {
-    throw UnimplementedError();
+    _channel = IOWebSocketChannel.connect(_URL + vid, headers: _headers());
+  }
+
+  _headers() {
+    Map<String, dynamic> header = {
+      HiConstants.authTokenK: HiConstants.authTokenV,
+      HiConstants.courseFlagK: HiConstants.courseFlagV,
+    };
+
+    header[LoginDao.BOARDING_PASS] = LoginDao.getBoardingPass();
+
+    return header;
   }
 
   @override
