@@ -47,7 +47,7 @@ abstract class HiNetAdapter {
 
 - `flutter packages pub run build_runner build`
 
-## Navigator 2.0
+### Navigator 2.0
 
 ![001](/images/docs/RouterDelegate.png)
 
@@ -329,6 +329,10 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 >
 > 面向抽象编程！
 
-### Flutter中的渲染机制
+----
+
+## Flutter的渲染机制
+
+> 🚨 🚨 🚨 **[提纯]** ⚠️ ⚠️ ⚠️
 
 ![3tree](doc/img/flutter-three-tree.jpg)
