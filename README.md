@@ -337,6 +337,10 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ![3tree](doc/img/flutter-three-tree.jpg)
 
+### How Flutter Renders Widgets
+
+![3tree](doc/img/f1.gif)
+
 ## Flutter应用的架构
 
 > 🚨 🚨 🚨  **【提纯预警】** ⚠️ ⚠️ ⚠️
