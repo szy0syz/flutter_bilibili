@@ -333,6 +333,10 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ## Flutter的渲染机制
 
-> 🚨 🚨 🚨 **[提纯]** ⚠️ ⚠️ ⚠️
+> 🚨 🚨 🚨  **【提纯预警】** ⚠️ ⚠️ ⚠️
 
 ![3tree](doc/img/flutter-three-tree.jpg)
+
+## Flutter应用的架构
+
+> 🚨 🚨 🚨  **【提纯预警】** ⚠️ ⚠️ ⚠️
