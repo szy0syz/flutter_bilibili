@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class Hiblur extends StatelessWidget {
+class HiBlur extends StatelessWidget {
   final Widget? child;
 
   final double sigma;
 
-  const Hiblur({Key? key, this.child, this.sigma = 10})
+  const HiBlur({Key? key, this.child, this.sigma = 10})
       : super(key: key);
 
   @override

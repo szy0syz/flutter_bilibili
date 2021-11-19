@@ -4,6 +4,7 @@ import 'package:flutter_bilibili/http/dao/profile_dao.dart';
 import 'package:flutter_bilibili/model/profile_mo.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:flutter_bilibili/widget/benefit_card.dart';
 import 'package:flutter_bilibili/widget/course_card.dart';
 import 'package:flutter_bilibili/widget/hi_banner.dart';
 import 'package:flutter_bilibili/widget/hi_blur.dart';
@@ -93,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage>
                 "https://www.devio.org/img/beauty_camera/beauty_camera4.jpg",
               ),
             ),
-            Positioned.fill(child: Hiblur(sigma: 20)),
+            Positioned.fill(child: HiBlur(sigma: 20)),
             Positioned(
               bottom: 0,
               left: 0,
@@ -113,7 +114,8 @@ class _ProfilePageState extends State<ProfilePage>
 
     return [
       _buildBanner(),
-      CourseCard(courseList: _profileMo!.courseList,)
+      CourseCard(courseList: _profileMo!.courseList),
+      BenefitCard(benefitList: _profileMo!.benefitList)
     ];
   }
 
