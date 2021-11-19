@@ -8,18 +8,23 @@ import 'package:web_socket_channel/io.dart';
 class HiSocket extends ISocket {
   static const _URL = 'wss://api.devio.org/uapi/fa/barrage/BV1qt411j7fV';
 
-  late IOWebSocketChannel _channel;
-  late ValueChanged<List<BarrageModel>> _callback;
+  IOWebSocketChannel? _channel;
+  ValueChanged<List<BarrageModel>>? _callBack;
 
   // 心跳间隔秒数，根据服务器实际timeout时间来跳转，这里Nginx服务的timeout为60
   int _intervalSeconds = 50;
 
   @override
-  void close() {}
+  void close() {
+    if (_channel != null) {
+      _channel?.sink.close();
+    }
+  }
 
   @override
-  ISocket listen(ValueChanged<List<BarrageModel>> callback) {
-    throw UnimplementedError();
+  ISocket listen(callBack) {
+    _callBack = callBack;
+    return this;
   }
 
   @override
@@ -30,8 +35,8 @@ class HiSocket extends ISocket {
       pingInterval: Duration(seconds: _intervalSeconds),
     );
 
-    _channel.stream.handleError((error) {
-      print(error);
+    _channel?.stream.handleError((error) {
+      print('websocket连接发生错误: $error');
     }).listen((message) {
       _handleMessage(message);
     });
@@ -52,10 +57,20 @@ class HiSocket extends ISocket {
 
   @override
   ISocket send(String message) {
-    throw UnimplementedError();
+    _channel?.sink.add(message);
+    return this;
   }
 
-  void _handleMessage(message) {}
+  /// 处理服务端的返回信息
+  void _handleMessage(message) {
+    print('received: $message');
+
+    var result = BarrageModel.fromJsonString(message);
+
+    if (_callBack != null) {
+      _callBack!(result);
+    }
+  }
 }
 
 abstract class ISocket {
