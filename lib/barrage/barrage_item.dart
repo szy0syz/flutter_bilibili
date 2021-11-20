@@ -1,27 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bilibili/barrage/barrage_transition.dart';
 
 //弹幕widget
-class BarrageItem extends StatelessWidget {
+class BarrageItem extends StatefulWidget {
   final String? id;
   final double top;
   final Widget child;
-  final ValueChanged? onComplete;
+  final ValueChanged onComplete;
   final Duration duration;
 
-  const BarrageItem(
+  BarrageItem(
       {Key? key,
       this.id,
       required this.top,
       required this.child,
-      this.onComplete,
+      required this.onComplete,
       this.duration = const Duration(milliseconds: 9000)})
       : super(key: key);
 
   @override
+  State<BarrageItem> createState() => _BarrageItemState();
+}
+
+class _BarrageItemState extends State<BarrageItem> {
+  var _key = GlobalKey<BarrageTransitionState>();
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: top),
-      child: Container(child: child),
+    return Positioned.fill(
+      child: BarrageTransition(
+        key: _key,
+        child: widget.child,
+        duration: widget.duration,
+        onComplete: (v) {
+          widget.onComplete(widget.id);
+        },
+      ),
     );
   }
 }

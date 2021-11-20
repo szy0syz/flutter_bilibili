@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/barrage/hi_barrage.dart';
-import 'package:flutter_bilibili/barrage/hi_socket.dart';
 import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/favorite_dao.dart';
 import 'package:flutter_bilibili/http/dao/like_dao.dart';
