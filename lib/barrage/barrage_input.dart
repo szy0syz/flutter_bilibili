@@ -73,7 +73,13 @@ class BarragetInput extends StatelessWidget {
     );
   }
 
-  void _send(String value, BuildContext context) {}
+  //发送消息
+  void _send(String text, BuildContext context) {
+    if (text.isNotEmpty) {
+      if (onTabColse != null) onTabColse!();
+      Navigator.pop(context);
+    }
+  }
 
   _buildSendBtn(TextEditingController editingController, BuildContext context) {
     return InkWell(
