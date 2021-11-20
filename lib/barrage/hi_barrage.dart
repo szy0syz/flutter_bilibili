@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/barrage/barrage_item.dart';
+import 'package:flutter_bilibili/barrage/barrage_view_util.dart';
 import 'package:flutter_bilibili/barrage/hi_socket.dart';
 import 'package:flutter_bilibili/barrage/ibarrage.dart';
 import 'package:flutter_bilibili/model/barrage_model.dart';
@@ -119,8 +120,22 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
     });
   }
 
-  void addBarrage(BarrageModel temp) {
-    //todo
+  void addBarrage(BarrageModel model) {
+    double perRowHeight = 30;
+    var line = _barrageIndex % widget.lintCount;
+    _barrageIndex++;
+    var top = line * perRowHeight + widget.top;
+    // 为每条弹幕生成一个id
+    String id = "${_random.nextInt(10000)}:${model.content}";
+    var item = BarrageItem(
+      id: id,
+      top: top,
+      onComplete: _onComplete,
+      child: BarrageViewUtil.barrageView(model),
+    );
+
+    _barrageItemList.add(item);
+    setState(() {});
   }
 
   @override
@@ -140,5 +155,10 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
     _hiSocket?.send(message);
     _handleMessage(
         [BarrageModel(content: message, vid: '-1', priority: 1, type: 1)]);
+  }
+
+  void _onComplete(id) {
+    print("Done: barrage-${id.toString()}");
+    _barrageItemList.removeWhere((element) => element.id == id);
   }
 }
