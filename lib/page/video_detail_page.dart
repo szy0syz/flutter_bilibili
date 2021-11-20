@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bilibili/barrage/hi_barrage.dart';
 import 'package:flutter_bilibili/barrage/hi_socket.dart';
 import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/favorite_dao.dart';
@@ -35,7 +36,8 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   VideoDetailMo? videoDetailMo;
   VideoModel? videoModel;
   List<VideoModel> videoList = [];
-  HiSocket? _hiSocket;
+
+  var _barrageKey = GlobalKey<HiBarrageState>();
 
   @override
   void initState() {
@@ -46,14 +48,12 @@ class _VideoDetailPageState extends State<VideoDetailPage>
 
     _controller = TabController(length: tabs.length, vsync: this);
     videoModel = widget.videoModel;
-    _initSocket();
     _loadData();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _hiSocket?.close();
     super.dispose();
   }
 
@@ -101,6 +101,11 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       model!.url!,
       cover: model.cover,
       overlayUI: videoAppBar(),
+      barrageUI: HiBarrage(
+        vid: model.vid,
+        key: _barrageKey,
+        autoPlay: true,
+      ),
     );
   }
 
@@ -239,14 +244,5 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     return videoList
         .map((VideoModel mo) => VideoLargeCard(videoModel: mo))
         .toList();
-  }
-
-  void _initSocket() {
-    if (videoModel == null || videoModel?.vid == null) return;
-
-    _hiSocket = HiSocket();
-    _hiSocket?.open(videoModel!.vid).listen((value) {
-      print('收到$value');
-    });
   }
 }

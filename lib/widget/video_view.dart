@@ -6,7 +6,6 @@ import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:video_player/video_player.dart';
 import 'package:orientation/orientation.dart';
 
-
 import 'hi_video_controls.dart';
 
 class VideoView extends StatefulWidget {
@@ -16,6 +15,7 @@ class VideoView extends StatefulWidget {
   final bool looping;
   final double aspectRatio;
   final Widget? overlayUI;
+  final Widget? barrageUI;
 
   VideoView(this.url,
       {Key? key,
@@ -23,7 +23,8 @@ class VideoView extends StatefulWidget {
       this.autoPlay = false,
       this.looping = false,
       this.aspectRatio = 16 / 9,
-      this.overlayUI})
+      this.overlayUI,
+      this.barrageUI})
       : super(key: key);
 
   @override
@@ -39,7 +40,7 @@ class _VideoViewState extends State<VideoView> {
         widthFactor: 1,
         child: cachedImage(widget.cover ?? ""),
       );
-  
+
   //进度条颜色配置
   get _progressColors => ChewieProgressColors(
       playedColor: primary,
@@ -54,21 +55,21 @@ class _VideoViewState extends State<VideoView> {
     // 初始化播放器设置
     _videoPlayerController = VideoPlayerController.network(widget.url);
     _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: widget.aspectRatio,
-      autoPlay: widget.autoPlay,
-      looping: widget.looping,
-      allowMuting: true,
-      placeholder: _placeholder,
-      allowPlaybackSpeedChanging: true,
-      customControls: MaterialControls(
-        showLoadingOnInitialize: false,
-        showBigPlayIcon: false,
-        overlayUI: widget.overlayUI,
-        bottomGradient: blackLinearGradient(),
-      ),
-      materialProgressColors: _progressColors
-    );
+        videoPlayerController: _videoPlayerController,
+        aspectRatio: widget.aspectRatio,
+        autoPlay: widget.autoPlay,
+        looping: widget.looping,
+        allowMuting: true,
+        placeholder: _placeholder,
+        allowPlaybackSpeedChanging: true,
+        customControls: MaterialControls(
+          showLoadingOnInitialize: false,
+          showBigPlayIcon: false,
+          overlayUI: widget.overlayUI,
+          barrageUI: widget.barrageUI,
+          bottomGradient: blackLinearGradient(),
+        ),
+        materialProgressColors: _progressColors);
     _chewieController.addListener(_fullScreenListener);
   }
 

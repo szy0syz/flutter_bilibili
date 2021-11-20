@@ -30,10 +30,10 @@ class HiBarrage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _HiBarrageState createState() => _HiBarrageState();
+  HiBarrageState createState() => HiBarrageState();
 }
 
-class _HiBarrageState extends State<HiBarrage> implements IBarrage {
+class HiBarrageState extends State<HiBarrage> implements IBarrage {
   HiSocket? _hiSocket;
   double? _height;
   double? _width;
@@ -71,10 +71,11 @@ class _HiBarrageState extends State<HiBarrage> implements IBarrage {
     return SizedBox(
       width: _width,
       height: _height,
-      child: Stack(children: [
+      child: Stack(
+          children: [
         //防止Stack的children为空
-        Container(),
-      ],),
+        Container()
+      ]..addAll(_barrageItemList)),
     );
   }
 
@@ -118,7 +119,9 @@ class _HiBarrageState extends State<HiBarrage> implements IBarrage {
     });
   }
 
-  void addBarrage(BarrageModel temp) {}
+  void addBarrage(BarrageModel temp) {
+    //todo
+  }
 
   @override
   void pause() {
