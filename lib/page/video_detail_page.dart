@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/barrage/barrage_input.dart';
+import 'package:flutter_bilibili/barrage/barrage_switch.dart';
 import 'package:flutter_bilibili/barrage/hi_barrage.dart';
 import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/favorite_dao.dart';
@@ -244,26 +245,29 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   _buildBarrageBtn() {
-    return InkWell(
-      onTap: () {
-        HiOverlay.show(context, child: BarragetInput(
-          onTabColse: () {
-            setState(() {
-              _inputShowing = false;
-            });
-          },
-        )).then((value) {
-          print("----input:$value");
-          _barrageKey.currentState?.send(value);
+    return BarrageSwitch(
+        initSwtich: _inputShowing,
+        onShowInput: () {
+          setState(() {
+            _inputShowing = true;
+          });
+          HiOverlay.show(context, child: BarragetInput(
+            onTabColse: () {
+              setState(() {
+                _inputShowing = false;
+              });
+            },
+          )).then((value) {
+            print("----input:$value");
+            _barrageKey.currentState?.send(value);
+          });
+        },
+        onBarrageSwitch: (open) {
+          if (open) {
+            _barrageKey.currentState?.play();
+          } else {
+            _barrageKey.currentState?.pause();
+          }
         });
-      },
-      child: Padding(
-        padding: EdgeInsets.only(right: 20),
-        child: Icon(
-          Icons.live_tv_rounded,
-          color: Colors.grey,
-        ),
-      ),
-    );
   }
 }
