@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/db/hi_cache.dart';
+import 'package:flutter_bilibili/util/color.dart';
 import 'package:flutter_bilibili/util/hi_constants.dart';
 
 extension ThemeModeExtension on ThemeMode {
@@ -36,6 +37,16 @@ class ThemeProvider extends ChangeNotifier {
 
   ///自定义主题样式细节
   ThemeData getTheme({bool isDarkMode = false}) {
-    
+    var themeData = ThemeData(
+        brightness: isDarkMode ? Brightness.dark : Brightness.light,
+        errorColor: isDarkMode ? HiColor.dark_red : HiColor.red,
+        primaryColor: isDarkMode ? HiColor.dark_bg : white,
+        // ignore: deprecated_member_use
+        accentColor: isDarkMode ? primary[50] : white,
+        //Tab指示器的颜色
+        indicatorColor: isDarkMode ? primary[50] : white,
+        //页面背景色
+        scaffoldBackgroundColor: isDarkMode ? HiColor.dark_bg : white);
+    return themeData;
   }
 }
