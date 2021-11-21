@@ -6,9 +6,10 @@ import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/page/login_page.dart';
 import 'package:flutter_bilibili/page/registration_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
+import 'package:flutter_bilibili/provider/hi_provider.dart';
 import 'package:flutter_bilibili/provider/theme_provider.dart';
-import 'package:flutter_bilibili/util/color.dart';
 import 'package:flutter_bilibili/util/toast.dart';
+import 'package:provider/provider.dart';
 
 import 'navigator/bottom_navigator.dart';
 
@@ -40,12 +41,16 @@ class _BiliAppState extends State<BiliApp> {
                   ),
                 );
 
-          return MaterialApp(
-            home: widget,
-            theme: ThemeProvider().getTheme(),
-            darkTheme: ThemeProvider().getTheme(),
-            themeMode: ThemeProvider().getThemeMode(),
-          );
+          return MultiProvider(
+              providers: topProviders,
+              child: Consumer<ThemeProvider>(builder: (BuildContext context,
+                  ThemeProvider themeProvider, Widget? child) {
+                return MaterialApp(
+                    home: widget,
+                    theme: themeProvider.getTheme(),
+                    darkTheme: themeProvider.getTheme(isDarkMode: true),
+                    themeMode: themeProvider.getThemeMode());
+              }));
         });
   }
 }
