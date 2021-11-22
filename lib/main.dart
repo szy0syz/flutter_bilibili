@@ -9,13 +9,14 @@ import 'package:flutter_bilibili/page/registration_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
 import 'package:flutter_bilibili/provider/hi_provider.dart';
 import 'package:flutter_bilibili/provider/theme_provider.dart';
+import 'package:flutter_bilibili/util/hi_defend.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:provider/provider.dart';
 
 import 'navigator/bottom_navigator.dart';
 
 void main() {
-  runApp(BiliApp());
+  HiDefend().run(BiliApp());
 }
 
 class BiliApp extends StatefulWidget {
