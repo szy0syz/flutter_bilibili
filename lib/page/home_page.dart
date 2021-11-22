@@ -7,9 +7,11 @@ import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/page/home_tab_page.dart';
 import 'package:flutter_bilibili/page/profile_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
+import 'package:flutter_bilibili/provider/theme_provider.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/hi_tab.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_bilibili/widget/loading_container.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 
@@ -72,6 +74,13 @@ class _HomePageState extends HiState<HomePage>
     HiNavigator.getInstance().removeListener(this.listener);
     _controller.dispose();
     super.dispose();
+  }
+
+  ///监听系统Dark Mode变化
+  @override
+  void didChangePlatformBrightness() {
+    context.read<ThemeProvider>().darModeChange();
+    super.didChangePlatformBrightness();
   }
 
   ///监听应用生命周期变化
