@@ -108,7 +108,7 @@ class _HomePageState extends HiState<HomePage>
               child: _appBar(),
             ),
             Container(
-              decoration: bottomBoxShadow(),
+              decoration: bottomBoxShadow(context),
               child: _tabBar(),
             ),
             Flexible(

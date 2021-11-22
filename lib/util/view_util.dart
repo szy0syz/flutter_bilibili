@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_bilibili/provider/theme_provider.dart';
 import 'package:flutter_bilibili/util/format_util.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 
@@ -91,7 +93,12 @@ SizedBox hiSpace({double height: 1, double width: 1}) {
   return SizedBox(height: height, width: width);
 }
 
-BoxDecoration bottomBoxShadow() {
+BoxDecoration? bottomBoxShadow(BuildContext context) {
+  var themeProvider = context.watch<ThemeProvider>();
+  if (themeProvider.isDark()) {
+    return null;
+  }
+
   return BoxDecoration(
     color: Colors.white,
     boxShadow: [
