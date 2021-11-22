@@ -47,7 +47,8 @@ class ThemeProvider extends ChangeNotifier {
         _themeMode = ThemeMode.light;
     }
 
-    return _themeMode = ThemeMode.system;
+    // return _themeMode = ThemeMode.system;
+    return _themeMode!;
   }
 
   ///设置主体

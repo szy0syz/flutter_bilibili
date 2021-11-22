@@ -6,6 +6,7 @@ import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/benefit_card.dart';
 import 'package:flutter_bilibili/widget/course_card.dart';
+import 'package:flutter_bilibili/widget/dark_mode_item.dart';
 import 'package:flutter_bilibili/widget/hi_banner.dart';
 import 'package:flutter_bilibili/widget/hi_blur.dart';
 import 'package:flutter_bilibili/widget/hi_flexible_header.dart';
@@ -115,7 +116,8 @@ class _ProfilePageState extends State<ProfilePage>
     return [
       _buildBanner(),
       CourseCard(courseList: _profileMo!.courseList),
-      BenefitCard(benefitList: _profileMo!.benefitList)
+      BenefitCard(benefitList: _profileMo!.benefitList),
+      DarkModeItem()
     ];
   }
 
