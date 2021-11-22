@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
+import 'package:flutter_bilibili/provider/theme_provider.dart';
 import 'package:flutter_bilibili/util/format_util.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:provider/provider.dart';
 
 ///视频卡片
 class VideoCard extends StatelessWidget {
@@ -12,6 +14,9 @@ class VideoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = context.watch<ThemeProvider>();
+    Color textColor = themeProvider.isDark() ? Colors.white70 : Colors.black87;
+
     return InkWell(
         onTap: () {
           print(videoMo.url);
@@ -27,7 +32,7 @@ class VideoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [_itemImage(context), _infoText()],
+                children: [_itemImage(context), _infoText(textColor)],
               ),
             ),
           ),
@@ -82,7 +87,7 @@ class VideoCard extends StatelessWidget {
     );
   }
 
-  _infoText() {
+  _infoText(Color textColor) {
     return Expanded(
         child: Container(
       padding: EdgeInsets.only(top: 5, left: 8, right: 8, bottom: 5),
@@ -94,16 +99,16 @@ class VideoCard extends StatelessWidget {
             videoMo.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 12, color: Colors.black87),
+            style: TextStyle(fontSize: 12, color: textColor),
           ),
           //作者
-          _owner()
+          _owner(textColor)
         ],
       ),
     ));
   }
 
-  _owner() {
+  _owner(Color textColor) {
     var owner = videoMo.owner;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +122,7 @@ class VideoCard extends StatelessWidget {
               padding: EdgeInsets.only(left: 8),
               child: Text(
                 owner.name,
-                style: TextStyle(fontSize: 11, color: Colors.black87),
+                style: TextStyle(fontSize: 11, color: textColor),
               ),
             )
           ],

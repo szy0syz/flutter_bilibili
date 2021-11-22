@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/navigator/bottom_navigator.dart';
+import 'package:flutter_bilibili/page/dark_mode_page.dart';
 import 'package:flutter_bilibili/page/login_page.dart';
 import 'package:flutter_bilibili/page/registration_page.dart';
 import 'package:flutter_bilibili/page/video_detail_page.dart';
@@ -10,7 +11,7 @@ pageWrap(Widget child) {
 }
 
 /// 自定义路由封装，路由状态
-enum RouteStatus { login, registration, home, detail, unknown }
+enum RouteStatus { login, registration, home, detail, darkMode, unknown }
 
 ///获取routeStatus在页面栈中的位置
 int getPageIndex(List<MaterialPage> pages, RouteStatus routeStatus) {
@@ -29,11 +30,13 @@ RouteStatus getStatus(MaterialPage page) {
     return RouteStatus.login;
   } else if (page.child is RegistrationPage) {
     return RouteStatus.registration;
-  } // 现在首页已不再是Home页了
-  else if (page.child is BottomNavigator) {
+  } else if (page.child is BottomNavigator) {
+    // 现在首页已不再是Home页了
     return RouteStatus.home;
   } else if (page.child is VideoDetailPage) {
     return RouteStatus.detail;
+  } else if (page.child is DarkModePage) {
+    return RouteStatus.darkMode;
   } else {
     return RouteStatus.unknown;
   }
@@ -69,6 +72,10 @@ class HiNavigator extends _RouteJumpListener {
     }
 
     return _instance!;
+  }
+
+  RouteStatusInfo? getCurrent() {
+    return _current;
   }
 
   // 首页底部tab切换监听
@@ -110,7 +117,7 @@ class HiNavigator extends _RouteJumpListener {
       current = _bottomTab!;
     }
     print('hi_navigator:current:${current.page}');
-    
+
     print('hi_navigator:pre:${_current?.page}');
     _listeners.forEach((listener) {
       listener(current, _current!);

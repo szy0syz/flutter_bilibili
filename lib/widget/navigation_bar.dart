@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/provider/theme_provider.dart';
 import 'package:flutter_bilibili/util/color.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:provider/provider.dart';
 
 enum StatusStyle { LIGHT_CONTENT, DARK_CONTENT }
 

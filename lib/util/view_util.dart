@@ -3,6 +3,12 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bilibili/navigator/hi_navigator.dart';
+import 'package:flutter_bilibili/page/profile_page.dart';
+import 'package:flutter_bilibili/page/video_detail_page.dart';
+import 'package:flutter_bilibili/util/color.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_bilibili/provider/theme_provider.dart';
 import 'package:flutter_bilibili/util/format_util.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';
 
@@ -46,6 +52,24 @@ void changeStatusBar(
     {color: Colors.white,
     StatusStyle statusStyle: StatusStyle.DARK_CONTENT,
     BuildContext? context}) {
+  //
+  if (context != null) {
+    var themeProvider = context.watch<ThemeProvider>();
+    if (themeProvider.isDark()) {
+      statusStyle = StatusStyle.LIGHT_CONTENT;
+      color = HiColor.dark_bg;
+    }
+  }
+
+  var page = HiNavigator.getInstance().getCurrent()?.page;
+  //fix android切换 profile页面状态栏白色问题
+  if (page is ProfilePage) {
+    color = Colors.transparent;
+  } else if (page is VideoDetailPage) {
+    color = Colors.black;
+    statusStyle = StatusStyle.LIGHT_CONTENT;
+  }
+
   //沉浸式状态栏样式
   var brightness;
   if (Platform.isIOS) {
@@ -91,7 +115,12 @@ SizedBox hiSpace({double height: 1, double width: 1}) {
   return SizedBox(height: height, width: width);
 }
 
-BoxDecoration bottomBoxShadow() {
+BoxDecoration? bottomBoxShadow(BuildContext context) {
+  var themeProvider = context.watch<ThemeProvider>();
+  if (themeProvider.isDark()) {
+    return null;
+  }
+
   return BoxDecoration(
     color: Colors.white,
     boxShadow: [
