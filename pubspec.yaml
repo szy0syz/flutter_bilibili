@@ -47,7 +47,7 @@ dependencies:
   collection: ^1.15.0
   web_socket_channel: ^2.1.0
   flutter_overlay: ^1.0.0
-  provider: ^6.0.1
+  provider: ^6.0.0 # for chewie 1.2.2
 
 dev_dependencies:
   flutter_test:
