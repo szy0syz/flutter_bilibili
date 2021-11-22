@@ -329,6 +329,18 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 >
 > 面向抽象编程！
 
+### Flutter中性能优化
+
+- 常见优化的四个方向:
+
+![op1](doc/img/op1.png)
+
+- 优化前后对比：
+
+![op2](doc/img/op2.gif)
+
+![op3](doc/img/op3.gif)
+
 ----
 
 ## Flutter的渲染机制
