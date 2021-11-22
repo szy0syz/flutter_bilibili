@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/util/color.dart';
 import 'package:flutter_bilibili/util/hi_constants.dart';
@@ -10,6 +11,26 @@ extension ThemeModeExtension on ThemeMode {
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode? _themeMode;
+  var _platformBrightness = SchedulerBinding.instance?.window.platformBrightness;
+
+  ///系统Dark Mode发生变化
+  void darModeChange() {
+    if (_platformBrightness !=
+        SchedulerBinding.instance?.window.platformBrightness) {
+      _platformBrightness = SchedulerBinding.instance?.window.platformBrightness;
+      notifyListeners();
+    }
+  }
+
+  ///判断是否是Dark Mode
+  bool isDark() {
+    if (_themeMode == ThemeMode.system) {
+      //获取系统的Dark Mode
+      return SchedulerBinding.instance?.window.platformBrightness ==
+          Brightness.dark;
+    }
+    return _themeMode == ThemeMode.dark;
+  }
 
   ///获取主题
   ThemeMode getThemeMode() {
