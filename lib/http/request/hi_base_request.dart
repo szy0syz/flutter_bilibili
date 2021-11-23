@@ -1,5 +1,4 @@
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
-import 'package:flutter_bilibili/util/hi_constants.dart';
 
 enum HttpMethod { GET, POST, DELETE }
 
