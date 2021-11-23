@@ -345,6 +345,20 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 > 独立的组件是没有相互复杂的依赖，所以说我们在拆分组件之前，必须将该组件的依赖理清，并将不利于它拆分的因素处理好，最后才能顺利拆分出去。
 
+重构HiNet
+
+- 首先分析得出，要拆分HiNet模块，必须将业务与逻辑分开。
+- 那么我们必须把 `core` 层抽走，`dao` 层是业务不用动
+- 而 `request` 层则有业务和逻辑混合
+  - 先建立一个 `hi_base_request` 的抽象类 和 `base_request` 类
+  - 然后分析：`url()` 这个方法中携带令牌在请求头的逻辑是业务，必须抽出来放到具体类中去 `重写`，而且完后再回归抽象类方法
+  - 业务中定义令牌的请求头也需要重写覆盖
+  - 这样就把抽象与业务分开
+
+> 不得不说
+
+![goood.jpeg](doc/img/goood.jpeg)
+
 ----
 
 ## Flutter的渲染机制
