@@ -341,6 +341,10 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ![op3](doc/img/op3.gif)
 
+### 模块块
+
+> 独立的组件是没有相互复杂的依赖，所以说我们在拆分组件之前，必须将该组件的依赖理清，并将不利于它拆分的因素处理好，最后才能顺利拆分出去。
+
 ----
 
 ## Flutter的渲染机制
