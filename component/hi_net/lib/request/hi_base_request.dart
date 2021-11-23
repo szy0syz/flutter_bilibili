@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 enum HttpMethod { GET, POST, DELETE }
 
 ///基础请求

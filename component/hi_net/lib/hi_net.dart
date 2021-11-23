@@ -19,6 +19,7 @@ class HiNet {
 
   Future fire(HiBaseRequest request) async {
     HiNetResponse? response;
+    // ignore: prefer_typing_uninitialized_variables
     var error;
 
     try {
@@ -60,6 +61,7 @@ class HiNet {
   }
 
   void printLog(log) {
+    // ignore: avoid_print
     print('hi_net:' + log.toString());
   }
 }
