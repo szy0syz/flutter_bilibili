@@ -1,6 +1,6 @@
-import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/http/request/ranking_request.dart';
 import 'package:flutter_bilibili/model/ranking_mo.dart';
+import 'package:hi_net/hi_net.dart';
 
 class RankingDao {
   //https://api.devio.org/uapi/fa/ranking?sort=like&pageIndex=1&pageSize=40

@@ -1,6 +1,6 @@
-import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/http/request/video_detail_request.dart';
 import 'package:flutter_bilibili/model/video_detail_mo.dart';
+import 'package:hi_net/hi_net.dart';
 
 /// 视频详情页Dao
 class VideoDetailDao {

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_bilibili/http/request/hi_base_request.dart';
+import 'package:hi_net/request/hi_base_request.dart';
 
 ///网络请求抽象类
 abstract class HiNetAdapter {

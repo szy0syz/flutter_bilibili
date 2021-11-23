@@ -1,6 +1,6 @@
 import 'package:flutter_bilibili/http/request/homt_request.dart';
-import 'package:flutter_bilibili/http/core/hi_net.dart';
 import 'package:flutter_bilibili/model/home_mo.dart';
+import 'package:hi_net/hi_net.dart';
 
 class HomeDao {
   // https://api.devio.org/uapi/fa/home/推荐?pageIndex=1&pageSize=10

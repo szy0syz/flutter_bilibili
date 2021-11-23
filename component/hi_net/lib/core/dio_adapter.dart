@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_bilibili/http/request/hi_base_request.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_bilibili/http/core/hi_error.dart';
-import 'package:flutter_bilibili/http/core/hi_net_adapter.dart';
+import 'package:hi_net/request/hi_base_request.dart';
+
+import 'hi_error.dart';
+import 'hi_net_adapter.dart';
 
 ///Dio适配器
 class DioAdapter extends HiNetAdapter {
@@ -11,11 +11,9 @@ class DioAdapter extends HiNetAdapter {
     // 搞两个变量，一个没初始化赋值，一个初始化赋值
     var response, options = Options(headers: request.header);
     var error;
-    var url = Uri.parse(request.url());
-
     try {
       if (request.httpMethod() == HttpMethod.GET) {
-        response = await http.get(url);
+        response = await Dio().get(request.url(), options: options);
       } else if (request.httpMethod() == HttpMethod.POST) {
         response = await Dio()
             .post(request.url(), data: request.params, options: options);
@@ -27,13 +25,11 @@ class DioAdapter extends HiNetAdapter {
       error = e;
       response = e.response;
     }
-
     if (error != null) {
       ///抛出HiNetError
       throw HiNetError(response?.statusCode ?? -1, error.toString(),
           data: await buildRes(response, request));
     }
-
     return buildRes(response, request);
   }
 

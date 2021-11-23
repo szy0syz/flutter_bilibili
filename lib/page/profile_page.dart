@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/profile_dao.dart';
 import 'package:flutter_bilibili/model/profile_mo.dart';
 import 'package:flutter_bilibili/util/toast.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_bilibili/widget/dark_mode_item.dart';
 import 'package:flutter_bilibili/widget/hi_banner.dart';
 import 'package:flutter_bilibili/widget/hi_blur.dart';
 import 'package:flutter_bilibili/widget/hi_flexible_header.dart';
+import 'package:hi_net/core/hi_error.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key? key}) : super(key: key);

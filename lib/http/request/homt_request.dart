@@ -1,5 +1,4 @@
-
-import 'package:flutter_bilibili/http/request/hi_base_request.dart';
+import 'package:hi_net/request/hi_base_request.dart';
 
 import 'base_request.dart';
 
@@ -18,5 +17,4 @@ class HomeRequest extends BaseRequest {
   String path() {
     return 'uapi/fa/home';
   }
-  
 }

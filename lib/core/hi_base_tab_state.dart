@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/core/hi_state.dart';
-import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/util/color.dart';
 import 'package:flutter_bilibili/util/toast.dart';
+import 'package:hi_net/core/hi_error.dart';
 
 /// 通用底层带分页和刷新的页面框架
 /// M为Dao返回的数据模型，L为列表数据模型，T为具体widget
@@ -26,7 +26,9 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
       print('Distance: ${distance.toString()}');
       // 到底边距离小于300 并 没在执行加载异步 并整个容器可滚动距离不能为0
       // fix 当列表高度不满屏幕高度时不执行加载更多
-      if (distance < 300 && !loading && scrollController.position.maxScrollExtent != 0) {
+      if (distance < 300 &&
+          !loading &&
+          scrollController.position.maxScrollExtent != 0) {
         print('----loading----');
         loadData(loadMore: true);
       }
@@ -83,7 +85,7 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
           var newList = parseList(result);
           if (newList.isNotEmpty) {
             dataList = [...dataList, ...newList];
-            
+
             if (newList.length != 0) {
               pageInde++;
             }

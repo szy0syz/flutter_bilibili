@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/core/hi_state.dart';
-import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/home_dao.dart';
 import 'package:flutter_bilibili/model/home_mo.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_bilibili/provider/theme_provider.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
 import 'package:flutter_bilibili/widget/hi_tab.dart';
+import 'package:hi_net/core/hi_error.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bilibili/widget/loading_container.dart';
 import 'package:flutter_bilibili/widget/navigation_bar.dart';

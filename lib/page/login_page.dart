@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bilibili/http/core/hi_error.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
 import 'package:flutter_bilibili/util/string_util.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/login_button.dart';
 import 'package:flutter_bilibili/widget/login_effect.dart';
 import 'package:flutter_bilibili/widget/login_input.dart';
+import 'package:hi_net/core/hi_error.dart';
 
 class LoginPage extends StatefulWidget {
 

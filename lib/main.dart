@@ -80,6 +80,9 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     }));
   }
 
+  //todo
+  //设置网络错误拦截器
+
   @override
   Widget build(BuildContext context) {
     var index = getPageIndex(pages, routeStatus);

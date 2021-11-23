@@ -1,6 +1,6 @@
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
-import 'package:flutter_bilibili/http/request/hi_base_request.dart';
 import 'package:flutter_bilibili/util/hi_constants.dart';
+import 'package:hi_net/request/hi_base_request.dart';
 
 abstract class BaseRequest extends HiBaseRequest {
   @override
