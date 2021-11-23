@@ -352,6 +352,7 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 - 而 `request` 层则有业务和逻辑混合
   - 先建立一个 `hi_base_request` 的抽象类 和 `base_request` 类
   - 然后分析：`url()` 这个方法中携带令牌在请求头的逻辑是业务，必须抽出来放到具体类中去 `重写`，而且完后再回归抽象类方法
+  - 这也就是说将业务 `上移` ，把业务从 `抽象` 中脱离出去，实现类执行时，先把该做的业务做完，再去执行 `公共的那部分抽象代码` 👍 👍 👍
   - 业务中定义令牌的请求头也需要重写覆盖
   - 这样就把抽象与业务分开
 
