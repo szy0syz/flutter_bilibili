@@ -1,6 +1,5 @@
 import 'package:flutter_bilibili/http/core/dio_adapter.dart';
-
-import '../request/base_request.dart';
+import 'package:flutter_bilibili/http/request/hi_base_request.dart';
 import 'hi_error.dart';
 import 'hi_net_adapter.dart';
 
@@ -19,7 +18,7 @@ class HiNet {
     return _instance!;
   }
 
-  Future fire(BaseRequest request) async {
+  Future fire(HiBaseRequest request) async {
     HiNetResponse? response;
     var error;
 
@@ -55,7 +54,7 @@ class HiNet {
     }
   }
 
-  Future<HiNetResponse<T>> send<T>(BaseRequest request) async {
+  Future<HiNetResponse<T>> send<T>(HiBaseRequest request) async {
     ///使用Dio发送请求
     HiNetAdapter adapter = DioAdapter();
     return adapter.send(request);
