@@ -1,7 +1,9 @@
 
 import 'package:flutter_bilibili/http/request/hi_base_request.dart';
 
-class HomeRequest extends HiBaseRequest {
+import 'base_request.dart';
+
+class HomeRequest extends BaseRequest {
   @override
   HttpMethod httpMethod() {
     return HttpMethod.GET;
