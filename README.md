@@ -396,3 +396,7 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 ## Flutter应用的架构
 
 > 🚨 🚨 🚨  **【提纯预警】** ⚠️ ⚠️ ⚠️
+
+----
+
+> 差不多了，后续补点认知上只是的就可以，开启下一站 `Masterclass` 🔥
