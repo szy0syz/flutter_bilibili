@@ -27,6 +27,8 @@ dependencies:
   # 组件化配置
   hi_net:
     path: ./component/hi_net
+  hi_barrage:
+    path: ./component/hi_barrage
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

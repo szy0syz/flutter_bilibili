@@ -6,7 +6,7 @@ class BarrageTransition extends StatefulWidget {
   final Duration duration;
   final ValueChanged onComplete;
 
-  BarrageTransition(
+  const BarrageTransition(
       {Key? key,
       required this.child,
       required this.duration,

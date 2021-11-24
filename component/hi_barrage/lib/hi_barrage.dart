@@ -21,6 +21,7 @@ class HiBarrage extends StatefulWidget {
   final int speed;
   final double top;
   final bool autoPlay;
+  final Map<String, dynamic> headers;
 
   const HiBarrage(
       {Key? key,
@@ -28,7 +29,8 @@ class HiBarrage extends StatefulWidget {
       required this.vid,
       this.speed = 800,
       this.top = 0,
-      this.autoPlay = false})
+      this.autoPlay = false,
+      required this.headers})
       : super(key: key);
 
   @override
@@ -49,7 +51,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
   @override
   void initState() {
     super.initState();
-    _hiSocket = HiSocket(headers: {});
+    _hiSocket = HiSocket(headers: widget.headers);
     _hiSocket!.open(widget.vid).listen((value) {
       _handleMessage(value);
     });
