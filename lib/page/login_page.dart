@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
-import 'package:flutter_bilibili/util/string_util.dart';
+import 'package:hi_base/string_util.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/login_button.dart';

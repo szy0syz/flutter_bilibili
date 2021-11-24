@@ -43,7 +43,6 @@ dependencies:
   flutter_swiper_null_safety: ^1.0.2
   flutter_staggered_grid_view: ^0.4.0
   transparent_image: ^2.0.0
-  cached_network_image: ^3.0.0
   lottie: ^1.2.1
   chewie: ^1.2.2
   video_player: ^2.2.5
