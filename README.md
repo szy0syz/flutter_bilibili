@@ -360,6 +360,23 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ![goood.jpeg](doc/img/goood.jpeg)
 
+### 安卓打包
+
+- 原生级设置启动图及全屏显示等
+- 添加APP名和快照名
+  - `AndroidManifest.xml`
+  - `main.dart`
+- 检查和配置 `build.gradle` 文件
+  - `applicationId`
+  - `versionCode & versionName:`
+  - `minSdkVersion & targetSdkVersion`
+- 添加APP启动图标
+- 添加网络访问权限
+  - 在 `AndroidManifest.xml` 中添加 `<uses-permission android:name="android.permission.INTERNET"/>`
+- 签名 `APP`
+- 构建一个 `release` 包
+- 发布应用市场
+
 ----
 
 ## Flutter的渲染机制
