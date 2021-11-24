@@ -362,6 +362,10 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ![goood.jpeg](doc/img/goood.jpeg)
 
+- **这节完后**
+
+![goood.jpeg](doc/img/fs.jpg)
+
 ----
 
 ## Flutter的渲染机制
