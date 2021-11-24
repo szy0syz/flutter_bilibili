@@ -1,7 +1,6 @@
 
-
-import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hi_cache/hi_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

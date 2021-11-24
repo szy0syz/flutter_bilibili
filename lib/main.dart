@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:flutter_bilibili/http/dao/login_dao.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/navigator/hi_navigator.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_bilibili/provider/hi_provider.dart';
 import 'package:flutter_bilibili/provider/theme_provider.dart';
 import 'package:flutter_bilibili/util/hi_defend.dart';
 import 'package:flutter_bilibili/util/toast.dart';
+import 'package:hi_cache/hi_cache.dart';
 import 'package:provider/provider.dart';
 
 import 'navigator/bottom_navigator.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_bilibili/db/hi_cache.dart';
 import 'package:hi_base/color.dart';
 import 'package:flutter_bilibili/util/hi_constants.dart';
+import 'package:hi_cache/hi_cache.dart';
 
 extension ThemeModeExtension on ThemeMode {
   String get value => <String>["System", "Light", "Dark"][index];
