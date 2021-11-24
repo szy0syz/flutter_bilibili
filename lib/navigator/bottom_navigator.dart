@@ -4,7 +4,7 @@ import 'package:flutter_bilibili/page/favorite_page.dart';
 import 'package:flutter_bilibili/page/home_page.dart';
 import 'package:flutter_bilibili/page/profile_page.dart';
 import 'package:flutter_bilibili/page/ranking_page.dart';
-import 'package:flutter_bilibili/util/color.dart';
+import 'package:hi_base/color.dart';
 
 class BottomNavigator extends StatefulWidget {
   BottomNavigator({Key? key}) : super(key: key);

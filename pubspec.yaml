@@ -27,6 +27,8 @@ dependencies:
   # 组件化配置
   hi_net:
     path: ./component/hi_net
+  hi_base:
+    path: ./component/hi_base
   hi_barrage:
     path: ./component/hi_barrage
 

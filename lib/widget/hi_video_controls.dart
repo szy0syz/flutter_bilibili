@@ -10,7 +10,7 @@ import 'package:chewie/src/material/material_progress_bar.dart';
 import 'package:chewie/src/models/subtitle_model.dart';
 import 'package:chewie/src/notifiers/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bilibili/util/color.dart';
+import 'package:hi_base/color.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 

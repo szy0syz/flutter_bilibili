@@ -10,6 +10,7 @@ import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/util/hi_constants.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/barrage_switch.dart';
 import 'package:flutter_bilibili/widget/expandable_content.dart';

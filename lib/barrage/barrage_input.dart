@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bilibili/util/color.dart';
-import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:hi_base/color.dart';
+import 'package:hi_base/view_util.dart';
 
 class BarragetInput extends StatelessWidget {
   final VoidCallback? onTabColse;

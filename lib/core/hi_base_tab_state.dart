@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bilibili/core/hi_state.dart';
-import 'package:flutter_bilibili/util/color.dart';
+import 'package:hi_base/color.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:hi_net/core/hi_error.dart';
+import 'package:hi_base/hi_state.dart';
 
 /// 通用底层带分页和刷新的页面框架
 /// M为Dao返回的数据模型，L为列表数据模型，T为具体widget

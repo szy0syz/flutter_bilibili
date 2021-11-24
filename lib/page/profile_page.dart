@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/http/dao/profile_dao.dart';
 import 'package:flutter_bilibili/model/profile_mo.dart';
 import 'package:flutter_bilibili/util/toast.dart';
-import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:flutter_bilibili/widget/benefit_card.dart';
 import 'package:flutter_bilibili/widget/course_card.dart';
 import 'package:flutter_bilibili/widget/dark_mode_item.dart';

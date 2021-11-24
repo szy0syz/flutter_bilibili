@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
-import 'package:flutter_bilibili/util/color.dart';
-import 'package:flutter_bilibili/util/format_util.dart';
+import 'package:hi_base/color.dart';
+import 'package:hi_base/format_util.dart';
 
 /// 视频详情页，作者Widget
 class VideoHeader extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
-import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:hi_base/view_util.dart';
 
 /// 可展开的Widget组件
 class ExpandableContent extends StatefulWidget {

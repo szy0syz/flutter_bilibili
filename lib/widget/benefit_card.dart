@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_bilibili/model/profile_mo.dart';
-import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:flutter_bilibili/widget/hi_blur.dart';
 
 ///增值服务

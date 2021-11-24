@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bilibili/util/view_util.dart';
+import 'package:hi_base/view_util.dart';
 
 ///可动态改变位置的Header组件
 ///性能优化：局部刷新的应用@刷新原理
