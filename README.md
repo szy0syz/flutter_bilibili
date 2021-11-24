@@ -362,6 +362,22 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ![goood.jpeg](doc/img/goood.jpeg)
 
+#### 自己动手拆一个 `hi_video`
+
+首先看到文件结构如下：
+
+- 逐一查看每个文件的依赖
+- 并区分哪些是共用逻辑、哪些是业务逻辑
+
+![hivideo-01.png](doc/img/hivideo-01.png)
+
+只能抽离如下组件：
+
+- `video_view.dart`
+- 剩余四个与业务交互太深
+
+把 `hi_video_controls` 抽走，不仅可以给主工程减少两个重型依赖，还可以把业务做精。
+
 - **这节完后**
 
 ![goood.jpeg](doc/img/fs.jpg)
