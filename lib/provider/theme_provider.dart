@@ -6,7 +6,7 @@ import 'package:flutter_bilibili/util/hi_constants.dart';
 import 'package:hi_cache/hi_cache.dart';
 
 extension ThemeModeExtension on ThemeMode {
-  String get value => <String>["System", "Light", "Dark"][index];
+  String get value => <String>['System', 'Light', 'Dark'][index];
 }
 
 class ThemeProvider extends ChangeNotifier {
@@ -32,10 +32,9 @@ class ThemeProvider extends ChangeNotifier {
     return _themeMode == ThemeMode.dark;
   }
 
-  ///获取主题
+  ///获取主题模式
   ThemeMode getThemeMode() {
-    String theme = HiCache.getInstance().get(HiConstants.theme);
-    // 将字符串主体转换为枚举的主体
+    String? theme = HiCache.getInstance().get(HiConstants.theme);
     switch (theme) {
       case 'Dark':
         _themeMode = ThemeMode.dark;
@@ -45,19 +44,18 @@ class ThemeProvider extends ChangeNotifier {
         break;
       default:
         _themeMode = ThemeMode.light;
+        break;
     }
-
-    // return _themeMode = ThemeMode.system;
     return _themeMode!;
   }
 
-  ///设置主体
+  ///设置主题
   void setTheme(ThemeMode themeMode) {
     HiCache.getInstance().setString(HiConstants.theme, themeMode.value);
     notifyListeners();
   }
 
-  ///自定义主题样式细节
+  ///获取主题
   ThemeData getTheme({bool isDarkMode = false}) {
     var themeData = ThemeData(
         brightness: isDarkMode ? Brightness.dark : Brightness.light,

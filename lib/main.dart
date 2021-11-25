@@ -35,12 +35,11 @@ class _BiliAppState extends State<BiliApp> {
         // 进行全局的初始化
         future: HiCache.preInit(),
         builder: (BuildContext context, AsyncSnapshot<HiCache> snapshot) {
+          //定义route
           var widget = snapshot.connectionState == ConnectionState.done
               ? Router(routerDelegate: _routeDelegate)
               : Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  body: Center(child: CircularProgressIndicator()),
                 );
 
           return MultiProvider(
@@ -48,10 +47,12 @@ class _BiliAppState extends State<BiliApp> {
               child: Consumer<ThemeProvider>(builder: (BuildContext context,
                   ThemeProvider themeProvider, Widget? child) {
                 return MaterialApp(
-                    home: widget,
-                    theme: themeProvider.getTheme(),
-                    darkTheme: themeProvider.getTheme(isDarkMode: true),
-                    themeMode: themeProvider.getThemeMode());
+                  home: widget,
+                  theme: themeProvider.getTheme(),
+                  darkTheme: themeProvider.getTheme(isDarkMode: true),
+                  themeMode: themeProvider.getThemeMode(),
+                  title: 'Flutter Bili',
+                );
               }));
         });
   }
