@@ -5,7 +5,7 @@ import 'package:flutter_bilibili/model/home_mo.dart';
 import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/widget/hi_banner.dart';
 import 'package:flutter_bilibili/widget/video_card.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_nested/flutter_nested.dart';
 
 class HomeTabPage extends StatefulWidget {
   final String categoryName;
@@ -39,30 +39,50 @@ class _HomeTabPageState
   bool get wantKeepAlive => true;
 
   @override
-  get contentChild => StaggeredGridView.countBuilder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        controller: scrollController,
-        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+  get contentChild => HiNestedScrollView(
+      itemCount: dataList.length,
+      controller: scrollController,
+      padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+      headers: [
+        if (widget.bannerList != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: _banner(),
+          )
+      ],
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        itemCount: dataList.length,
-        itemBuilder: (BuildContext context, int index) {
-          if (widget.bannerList != null && index == 0) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: 8),
-              child: _banner(),
-            );
-          } else {
-            return VideoCard(videoMo: dataList[index]);
-          }
-        },
-        staggeredTileBuilder: (int index) {
-          if (widget.bannerList != null && index == 0) {
-            return StaggeredTile.fit(2);
-          } else {
-            return StaggeredTile.fit(1);
-          }
-        },
-      );
+        childAspectRatio: 0.95,
+      ),
+      itemBuilder: (BuildContext context, int index) {
+        return VideoCard(videoMo: dataList[index]);
+      });
+
+  // @override
+  // get contentChild => StaggeredGridView.countBuilder(
+  //       physics: const AlwaysScrollableScrollPhysics(),
+  //       controller: scrollController,
+  //       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+  //       crossAxisCount: 2,
+  //       itemCount: dataList.length,
+  //       itemBuilder: (BuildContext context, int index) {
+  //         if (widget.bannerList != null && index == 0) {
+  //           return Padding(
+  //             padding: EdgeInsets.only(bottom: 8),
+  //             child: _banner(),
+  //           );
+  //         } else {
+  //           return VideoCard(videoMo: dataList[index]);
+  //         }
+  //       },
+  //       staggeredTileBuilder: (int index) {
+  //         if (widget.bannerList != null && index == 0) {
+  //           return StaggeredTile.fit(2);
+  //         } else {
+  //           return StaggeredTile.fit(1);
+  //         }
+  //       },
+  //     );
 
   @override
   Future<HomeMo> getData(int pageIndex) async {
