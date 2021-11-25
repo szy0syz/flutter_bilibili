@@ -422,3 +422,11 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 ----
 
 > 差不多了，后续补点认知上只是的就可以，开启下一站 `Masterclass` 🔥
+
+----
+
+- **随手记**
+
+![n01](doc/img/n01.png)
+
+![n02](doc/img/n02.png)
