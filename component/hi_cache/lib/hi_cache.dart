@@ -11,6 +11,7 @@ class HiCache {
   static HiCache? _instance;
 
   HiCache._pre(SharedPreferences prefs) {
+    // ignore: prefer_initializing_formals
     this.prefs = prefs;
   }
 
@@ -24,13 +25,12 @@ class HiCache {
   }
 
   static HiCache getInstance() {
-    if (_instance == null) {
-      _instance = HiCache._();
-    }
+    _instance ??= HiCache._();
     return _instance!;
   }
 
   void init() async {
+    // ignore: prefer_conditional_assignment
     if (prefs == null) {
       prefs = await SharedPreferences.getInstance();
     }

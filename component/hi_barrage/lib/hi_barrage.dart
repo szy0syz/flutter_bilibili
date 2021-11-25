@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'dart:math';
 
@@ -78,8 +80,8 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
       child: Stack(
           children: [
         //防止Stack的children为空
-        Container()
-      ]..addAll(_barrageItemList)),
+        Container(), ..._barrageItemList
+      ]),
     );
   }
 

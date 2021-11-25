@@ -421,7 +421,7 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
 
 ----
 
-> 差不多了，后续补点认知上 **“口水话”** 的就可以，开启下一站 `Masterclass` 🔥
+> 差不多了，后续补点认知上 **“口水话”** 就可以，开启下一站 `Masterclass` 🔥
 
 ----
 

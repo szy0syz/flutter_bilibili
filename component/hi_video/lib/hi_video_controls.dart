@@ -365,7 +365,7 @@ class _MaterialControlsState extends State<MaterialControls>
     Size size = chewieController.videoPlayerController.value.size;
     // 播放器还没播放就不让全屏
     if (size.width == 0.0) {
-      print('_onExpandCollapse:videoPlayerController.value.size is null.');
+      // print('_onExpandCollapse:videoPlayerController.value.size is null.');
       return;
     }
     setState(() {
@@ -426,7 +426,7 @@ class _MaterialControlsState extends State<MaterialControls>
   Widget _buildProgressBar() {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(right: 15, left: 15),
+        padding: const EdgeInsets.only(right: 15, left: 15),
         child: MaterialVideoProgressBar(
           controller,
           onDragStart: () {
@@ -459,7 +459,7 @@ class _MaterialControlsState extends State<MaterialControls>
     return widget.overlayUI != null
         ? AnimatedOpacity(
             opacity: notifier.hideStuff ? 0.0 : 1.0,
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             child: widget.overlayUI)
         : Container();
   }

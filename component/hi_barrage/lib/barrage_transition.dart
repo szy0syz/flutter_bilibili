@@ -33,8 +33,8 @@ class BarrageTransitionState extends State<BarrageTransition>
         }
       });
     //定义从右往左的补间动画
-    var begin = Offset(1.0, 0);
-    var end = Offset(-1.0, 0);
+    var begin = const Offset(1.0, 0);
+    var end = const Offset(-1.0, 0);
     _animation = Tween(begin: begin, end: end).animate(_animationController);
     _animationController.forward();
   }

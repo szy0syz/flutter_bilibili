@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, prefer_collection_literals
+
 import 'dart:convert';
 
 class BarrageModel {
@@ -17,23 +19,23 @@ class BarrageModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['content'] = this.content;
-    data['vid'] = this.vid;
-    data['priority'] = this.priority;
-    data['type'] = this.type;
+    data['content'] = content;
+    data['vid'] = vid;
+    data['priority'] = priority;
+    data['type'] = type;
     return data;
   }
 
   static List<BarrageModel> fromJsonString(json) {
     List<BarrageModel> list = [];
-    if (!(json is String) || !json.startsWith('[')) {
-      print('json is not invalid');
+    if (json is! String || !json.startsWith('[')) {
+      // print('json is not invalid');
       return [];
     }
 
     var jsonArray = jsonDecode(json);
     jsonArray.forEach((v) {
-      list.add(new BarrageModel.fromJson(v));
+      list.add(BarrageModel.fromJson(v));
     });
     return list;
   }

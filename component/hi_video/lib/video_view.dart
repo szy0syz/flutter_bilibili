@@ -1,12 +1,45 @@
 import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hi_base/color.dart';
-import 'package:hi_base/view_util.dart';
+import 'package:hi_video/hi_video_controls.dart';
 import 'package:video_player/video_player.dart';
 import 'package:orientation/orientation.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
-import 'hi_video_controls.dart';
+///黑色线性渐变
+blackLinearGradient({bool fromTop = false}) {
+  return LinearGradient(
+      begin: fromTop ? Alignment.topCenter : Alignment.bottomCenter,
+      end: fromTop ? Alignment.bottomCenter : Alignment.topCenter,
+      colors: const [
+        Colors.black54,
+        Colors.black45,
+        Colors.black38,
+        Colors.black26,
+        Colors.black12,
+        Colors.transparent
+      ]);
+}
+
+///带缓存的image
+Widget cachedImage(String url, {double? width, double? height}) {
+  return CachedNetworkImage(
+      height: height,
+      width: width,
+      fit: BoxFit.cover,
+      placeholder: (
+        BuildContext context,
+        String url,
+      ) =>
+          Container(color: Colors.grey[200]),
+      errorWidget: (
+        BuildContext context,
+        String url,
+        dynamic error,
+      ) =>
+          const Icon(Icons.error),
+      imageUrl: url);
+}
 
 class VideoView extends StatefulWidget {
   final String url;
@@ -16,15 +49,17 @@ class VideoView extends StatefulWidget {
   final double aspectRatio;
   final Widget? overlayUI;
   final Widget? barrageUI;
+  final Color? primaryColor;
 
-  VideoView(this.url,
+  const VideoView(this.url,
       {Key? key,
       this.cover,
       this.autoPlay = false,
       this.looping = false,
       this.aspectRatio = 16 / 9,
       this.overlayUI,
-      this.barrageUI})
+      this.barrageUI,
+      this.primaryColor = const Color.fromRGBO(255, 0, 0, 0.7)})
       : super(key: key);
 
   @override
@@ -43,10 +78,10 @@ class _VideoViewState extends State<VideoView> {
 
   //进度条颜色配置
   get _progressColors => ChewieProgressColors(
-      playedColor: primary,
-      handleColor: primary,
+      playedColor: widget.primaryColor!,
+      handleColor: widget.primaryColor!,
       backgroundColor: Colors.grey,
-      bufferedColor: primary[50]!);
+      bufferedColor: widget.primaryColor!);
 
   @override
   void initState() {

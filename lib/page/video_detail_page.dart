@@ -10,7 +10,6 @@ import 'package:flutter_bilibili/model/video_model.dart';
 import 'package:flutter_bilibili/util/hi_constants.dart';
 import 'package:flutter_bilibili/util/toast.dart';
 import 'package:flutter_bilibili/util/view_util.dart';
-import 'package:hi_base/view_util.dart';
 import 'package:flutter_bilibili/widget/appbar.dart';
 import 'package:flutter_bilibili/widget/barrage_switch.dart';
 import 'package:flutter_bilibili/widget/expandable_content.dart';
@@ -19,10 +18,10 @@ import 'package:flutter_bilibili/widget/navigation_bar.dart';
 import 'package:flutter_bilibili/widget/video_header.dart';
 import 'package:flutter_bilibili/widget/video_large_card.dart';
 import 'package:flutter_bilibili/widget/video_toolbar.dart';
-import 'package:flutter_bilibili/widget/video_view.dart';
 import 'package:flutter_overlay/flutter_overlay.dart';
 import 'package:hi_barrage/hi_barrage.dart';
 import 'package:hi_net/core/hi_error.dart';
+import 'package:hi_video/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget {
   final VideoModel videoModel;

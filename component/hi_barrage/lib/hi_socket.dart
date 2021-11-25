@@ -26,6 +26,7 @@ class HiSocket extends ISocket {
   }
 
   @override
+  // ignore: avoid_renaming_method_parameters
   ISocket listen(callBack) {
     _callBack = callBack;
     return this;
